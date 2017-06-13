@@ -11,7 +11,7 @@ source ~/SHH/bin/activate
 
 git clone https://github.com/songanyi/SHH && cd SSH
 
-pip install --r requirements.txt
+pip install -r requirements.txt
 
 python SHH/manage.py migrate
 ```
