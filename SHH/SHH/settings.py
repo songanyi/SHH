@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "taggit",
+    "habitat",
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -76,6 +77,7 @@ WSGI_APPLICATION = 'SHH.wsgi.application'
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
+    # TODO set engine to django.db.backends.mysql or django.db.backends.postgresql
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
