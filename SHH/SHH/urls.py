@@ -20,4 +20,5 @@ from habitat import views
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^admin/', admin.site.urls),
+    url(r'^view-property/', views.view_property, name='view-property')
 ]
