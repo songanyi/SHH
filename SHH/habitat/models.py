@@ -25,7 +25,9 @@ class Property(models.Model):
     address = models.TextField()
     size = models.FloatField()
     pub_date = models.DateTimeField('date published')
-    contact = models.ForeignKey(Contact)
+    #contact = models.ForeignKey(Contact)
+    email = models.EmailField()
+    phone = models.CharField(max_length=18)
     tags = TaggableManager()
 
     def __str__(self):
