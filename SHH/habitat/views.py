@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django import forms
-from datetime import date
 
 from .models import Property
 from .models import Contact
@@ -23,7 +22,7 @@ def view_property(request):
 
 
 def add_property(request):
-    '''
+    
     if request.method == 'POST':
         form = PropertyForm(request.POST)    
         if form.is_valid():
@@ -33,14 +32,18 @@ def add_property(request):
             phone = form.cleaned_data['phone']
             tags = form.cleaned_data['tags']
 
-            prop = Property(address=address, size=size, email=email, phone=phone, pub_date=datetime.now())
+            prop = Property.objects.create(address=address, size=size, email=email, phone=phone)
+            '''
+            prop.size = size
+            prop.email = email
+            prop.phone = phone
+            prop.pub_date = now
+            '''
             prop.tags.add(*tags)
-            #prop.save()
-            # TODO add prop
+            prop.save()
 
             return HttpResponse('/settings/')
     else:
         form = PropertyForm()
-    '''
-    form = PropertyForm()
+
     return render(request, 'add-property.html', {'form': form})

@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 #https://github.com/alex/django-taggit
 from taggit.managers import TaggableManager
@@ -24,7 +25,7 @@ class Contact(models.Model):
 class Property(models.Model):
     address = models.TextField()
     size = models.FloatField()
-    pub_date = models.DateTimeField('date published')
+    pub_date = models.DateTimeField(default=timezone.now)
     #contact = models.ForeignKey(Contact)
     email = models.EmailField()
     phone = models.CharField(max_length=18)
