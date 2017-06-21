@@ -9,8 +9,27 @@ from .forms import PropertyForm
 
 # Create your views here.
 def index(request):
-    return HttpResponse("Hello world")
+    context = {
+        'listImages':[
+            {'url': 'images/listing/list1.png', 'name': 'apartment 1'},
+            {'url': 'images/listing/list2.png', 'name': 'apartment 2'},
+            {'url': 'images/listing/list3.png', 'name': 'apartment 3'},
+        ]
 
+    }
+    return render(request, 'index.html', context)
+
+def search(request):
+    context = {}
+    return render(request, 'search.html', context)
+
+def work_details(request):
+    context = {}
+    return render(request, 'work-details.html', context)
+
+def renter_guide(request):
+    context = {}
+    return render(request, 'renter-guide.html', context)
 
 def view_property(request):
     properties = Property.objects.order_by('-pub_date')[:10]

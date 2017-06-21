@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<!-- Welcome Section -->
+<section id="welcome" class="section welcome">
+  <h3 class="welcome-color">Shanghai Habitat</h3>
+  <h3>Your next home is here</h3>
+
+</section>
+
+<!-- listing section -->
+<section id="listing" class="section listing">
+  <div class="container">
+    <div class="row">
+      {% for listImage in listImages %}
+        <div class="col-sm-4 listing-image">
+          <img src="{% static listImage.url %}" class="img-responsive" alt="">
+          <div class="listing-content">
+            {{ listImage.name }}
+          </div>
+        </div>
+      {% endfor %}
+
+      <!--div class="col-sm-4 listing-image">
+        <img src="{% static 'images/listing/list1.png' %}" class="img-responsive" alt="">
+        <div class="listing-content">
+        apartment
+        </div>
+      </div>
+      <div class="col-sm-4 listing-image">
+        <img src="{% static 'images/listing/list2.png' %}" class="img-responsive" alt="">
+        <div class="listing-content">
+          apartment
+        </div>
+      </div>
+      <div class="col-sm-4 listing-image">
+        <img src="{% static 'images/listing/list3.png' %}" class="img-responsive" alt="">
+        <div class="listing-content">
+          apartment
+        </div>
+      </div-->
+    </div>
+  </div>
+</section>
+
+<!-- Service Section -->
+<section id="services" class="section services">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6 col-sm-6">
+        <div class="services-content">
+          <h4>We are always with you in Shanghai!</h4>
+          <p>Help you find you perfect place in Town</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="services-content">
+          <h5>Our Renter Guide</h5>
+          <ul>
+            <li><a href="renter-guide/">test</a></li>
+            <li><a href="renter-guide/">test</a></li>
+            <li><a href="renter-guide/">test</a></li>
+            <li><a href="renter-guide/">test</a></li>
+            <li><a href="renter-guide/">test</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="services-content">
+            <h5>Our Platform</h5>
+          <ul>
+            <li><a href="#">test</a></li>
+            <li><a href="#">test</a></li>
+            <li><a href="#">test</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Service Section --> 
+<!-- <div class="copyrights">Collect from <a href="http://www.cssmoban.com/"  title="网站模板">网站模板</a></div> --> 
+
+<!-- portfolio grid section -->
+<section id="portfolio" class="section portfolio">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-4 portfolio-item"> <a href="work-details.html" class="portfolio-link">
+        <div class="caption">
+          <div class="caption-content">
+            <h3>The Shape of Design</h3>
+            <h4>Branding/Graphic</h4>
+          </div>
+        </div>
+        <img src="{% static 'images/portfolio/work-1.jpg' %}" class="img-responsive" alt=""> </a> </div>
+      <div class="col-sm-4 portfolio-item"> <a href="work-details/" class="portfolio-link">
+        <div class="caption">
+          <div class="caption-content">
+            <h3>czarna kawka</h3>
+            <h4>Branding</h4>
+          </div>
+        </div>
+        <img src="{% static 'images/portfolio/work-2.jpg' %}" class="img-responsive" alt=""> </a> </div>
+      <div class="col-sm-4 portfolio-item"> <a href="work-details/" class="portfolio-link">
+        <div class="caption">
+          <div class="caption-content">
+            <h3>czarna kawka</h3>
+            <h4>Branding</h4>
+          </div>
+        </div>
+        <img src="{% static 'images/portfolio/work-3.jpg' %}" class="img-responsive" alt=""> </a> </div>
+      <div class="col-sm-4 portfolio-item"> <a href="work-details/" class="portfolio-link">
+        <div class="caption">
+          <div class="caption-content">
+            <h3>czarna kawka</h3>
+            <h4>Branding</h4>
+          </div>
+        </div>
+        <img src="{% static 'images/portfolio/work-4.jpg' %}" class="img-responsive" alt=""> </a> </div>
+      <div class="col-sm-4 portfolio-item"> <a href="work-details.html" class="portfolio-link">
+        <div class="caption">
+          <div class="caption-content">
+            <h3>czarna kawka</h3>
+            <h4>Branding</h4>
+          </div>
+        </div>
+        <img src="{% static 'images/portfolio/work-5.jpg' %}" class="img-responsive" alt=""> </a> </div>
+      <div class="col-sm-4 portfolio-item"> <a href="work-details.html" class="portfolio-link">
+        <div class="caption">
+          <div class="caption-content">
+            <h3>czarna kawka</h3>
+            <h4>Branding</h4>
+          </div>
+        </div>
+        <img src="{% static 'images/portfolio/work-6.jpg' %}" class="img-responsive" alt=""> </a> </div>
+    </div>
+  </div>
+</section>
+<!-- portfolio grid section -->
+
+<!-- Testimonials section -->
+<section id="testimonials" class="section testimonials no-padding">
+  <div class="container-fluid">
+    <div class="row no-gutter">
+      <div class="flexslider">
+        <ul class="slides">
+          <li>
+            <div class="col-md-12">
+              <blockquote>
+                <h1>"Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Donec sed odio dui. Phasellus non dolor nibh. Nullam elementum Aenean eu leo quam..." </h1>
+                <p>Rene Brown, Open Window production</p>
+              </blockquote>
+            </div>
+          </li>
+          <li>
+            <div class="col-md-12">
+              <blockquote>
+                <h1>"Cras dictum tellus dui, vitae sollicitudin ipsum. Phasellus non dolor nibh. Nullam elementum tellus pretium feugiat shasellus non dolor nibh. Nullam elementum tellus pretium feugiat." </h1>
+                <p>Brain Rice, Lexix Private Limited.</p>
+              </blockquote>
+            </div>
+          </li>
+          <li>
+            <div class="col-md-12">
+              <blockquote>
+                <h1>"Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui. Aenean lacinia bibendum nulla sed consectetur...." </h1>
+                <p>Andi Simond, Global Corporate Inc</p>
+              </blockquote>
+            </div>
+          </li>
+          <li>
+            <div class="col-md-12">
+              <blockquote>
+                <h1>"Lorem ipsum dolor sit amet, consectetur adipiscing elitPhasellus non dolor nibh. Nullam elementum tellus pretium feugiat. Cras dictum tellus dui sollcitudin." </h1>
+                <p>Kristy Gabbor, Martix Media</p>
+              </blockquote>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Testimonials section --> 
+
+{% endblock %}
