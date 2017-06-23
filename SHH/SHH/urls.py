@@ -27,7 +27,9 @@ urlpatterns = [
     url(r'^add-property/', views.add_property, name="add-property"),
     url(r'^renter-guide/', views.renter_guide, name="renter-guide"),
     url(r'^work-details/', views.work_details, name="work-details"),
-    url(r'^search/', views.search, name="search"),
+    url(r'^contact/', views.contact, name="contact"),
+    url(r'^search/(?P<page>)\w{0,50}/', views.search, name="search"),
+    url(r'^search/', views.searchGet, name="searchGet"),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

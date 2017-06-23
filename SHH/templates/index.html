@@ -1,49 +1,64 @@
-{% extends 'base.html' %}
-{% load static %}
-
-
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 <!-- Welcome Section -->
 <section id="welcome" class="section welcome">
   <h3 class="welcome-color">Shanghai Habitat</h3>
-  <h3>Your next home is here</h3>
+  <h3>meet your next home</h3>
 
 </section>
 
-<!-- listing section -->
+<!-- Feature Listing Section -->
 <section id="listing" class="section listing">
   <div class="container">
     <div class="row">
-      {% for listImage in listImages %}
-        <div class="col-sm-4 listing-image">
-          <img src="{% static listImage.url %}" class="img-responsive" alt="">
+      {% for feature in features %}
+      <div class="col-sm-4">
+        <a href="{{ feature.url }}">
+          <img src="{% static feature.img %}" class="img-responsive" alt="">
           <div class="listing-content">
-            {{ listImage.name }}
+            {{ feature.text }}
           </div>
-        </div>
+          </a>
+      </div>
       {% endfor %}
+    </div>
+  </div>
+  <div class="listing-btn">
+    <button class="btn-outline"> Explore More</button>
+  </div>
+</section>
+<!-- Feature Listing Section -->
 
-      <!--div class="col-sm-4 listing-image">
-        <img src="{% static 'images/listing/list1.png' %}" class="img-responsive" alt="">
-        <div class="listing-content">
-        apartment
-        </div>
+<!-- portfolio grid section -->
+<section id="portfolio" class="section portfolio">
+  <div class="container-fluid">
+    <div class="row">
+      {% for portfolio in portfolios %}
+      <div class="col-sm-3 portfolio-item">
+        <a href="{{ portfolio.url }}" class="portfolio-link">
+          <div class="caption">
+            <div class="caption-content">
+              <h3>{{ portfolio.text1 }}</h3>
+              <h4>{{ portfolio.text2 }}</h4>
+            </div>
+          </div>
+          <img src="{% static portfolio.img %}" class="img-responsive" alt=""> </a>
       </div>
-      <div class="col-sm-4 listing-image">
-        <img src="{% static 'images/listing/list2.png' %}" class="img-responsive" alt="">
-        <div class="listing-content">
-          apartment
-        </div>
-      </div>
-      <div class="col-sm-4 listing-image">
-        <img src="{% static 'images/listing/list3.png' %}" class="img-responsive" alt="">
-        <div class="listing-content">
-          apartment
-        </div>
-      </div-->
+      {% endfor %}
     </div>
   </div>
 </section>
+<!-- portfolio grid section -->
+
+<!-- renter guide Section -->
+<section id="renter-guide" class="section guide">
+  <h4>Learn the Shanghai ropes</h4>
+  <p>Do you need an agent? How can you find a no-fee apartment? How do you prepare for a showing? <br> Our Renter Guide will
+    prepare you for the hunt with tips, facts, checklists, forms and infographics.</p>
+  <div class="guide-btn">
+    <button class="btn-guide"> Read the Guide</button>
+  </div>
+</section>
+<!-- renter guide Section -->
 
 <!-- Service Section -->
 <section id="services" class="section services">
@@ -59,86 +74,26 @@
         <div class="services-content">
           <h5>Our Renter Guide</h5>
           <ul>
-            <li><a href="renter-guide/">test</a></li>
-            <li><a href="renter-guide/">test</a></li>
-            <li><a href="renter-guide/">test</a></li>
-            <li><a href="renter-guide/">test</a></li>
-            <li><a href="renter-guide/">test</a></li>
+            {% for renterGuide in renterGuides %}
+            <li><a href="{{ renterGuide.url }}">{{ renterGuide.text }}</a></li>
+            {% endfor %}
           </ul>
         </div>
       </div>
       <div class="col-md-3 col-sm-6">
         <div class="services-content">
-            <h5>Our Platform</h5>
+          <h5>Our Platform</h5>
           <ul>
-            <li><a href="#">test</a></li>
-            <li><a href="#">test</a></li>
-            <li><a href="#">test</a></li>
+            {% for platform in platforms %}
+            <li><a href="{{ platform.url }}">{{ platform.text }}</a></li>
+            {% endfor %}
           </ul>
         </div>
       </div>
     </div>
   </div>
 </section>
-<!-- Service Section --> 
-<!-- <div class="copyrights">Collect from <a href="http://www.cssmoban.com/"  title="网站模板">网站模板</a></div> --> 
-
-<!-- portfolio grid section -->
-<section id="portfolio" class="section portfolio">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm-4 portfolio-item"> <a href="work-details.html" class="portfolio-link">
-        <div class="caption">
-          <div class="caption-content">
-            <h3>The Shape of Design</h3>
-            <h4>Branding/Graphic</h4>
-          </div>
-        </div>
-        <img src="{% static 'images/portfolio/work-1.jpg' %}" class="img-responsive" alt=""> </a> </div>
-      <div class="col-sm-4 portfolio-item"> <a href="work-details/" class="portfolio-link">
-        <div class="caption">
-          <div class="caption-content">
-            <h3>czarna kawka</h3>
-            <h4>Branding</h4>
-          </div>
-        </div>
-        <img src="{% static 'images/portfolio/work-2.jpg' %}" class="img-responsive" alt=""> </a> </div>
-      <div class="col-sm-4 portfolio-item"> <a href="work-details/" class="portfolio-link">
-        <div class="caption">
-          <div class="caption-content">
-            <h3>czarna kawka</h3>
-            <h4>Branding</h4>
-          </div>
-        </div>
-        <img src="{% static 'images/portfolio/work-3.jpg' %}" class="img-responsive" alt=""> </a> </div>
-      <div class="col-sm-4 portfolio-item"> <a href="work-details/" class="portfolio-link">
-        <div class="caption">
-          <div class="caption-content">
-            <h3>czarna kawka</h3>
-            <h4>Branding</h4>
-          </div>
-        </div>
-        <img src="{% static 'images/portfolio/work-4.jpg' %}" class="img-responsive" alt=""> </a> </div>
-      <div class="col-sm-4 portfolio-item"> <a href="work-details.html" class="portfolio-link">
-        <div class="caption">
-          <div class="caption-content">
-            <h3>czarna kawka</h3>
-            <h4>Branding</h4>
-          </div>
-        </div>
-        <img src="{% static 'images/portfolio/work-5.jpg' %}" class="img-responsive" alt=""> </a> </div>
-      <div class="col-sm-4 portfolio-item"> <a href="work-details.html" class="portfolio-link">
-        <div class="caption">
-          <div class="caption-content">
-            <h3>czarna kawka</h3>
-            <h4>Branding</h4>
-          </div>
-        </div>
-        <img src="{% static 'images/portfolio/work-6.jpg' %}" class="img-responsive" alt=""> </a> </div>
-    </div>
-  </div>
-</section>
-<!-- portfolio grid section -->
+<!-- Service Section -->
 
 <!-- Testimonials section -->
 <section id="testimonials" class="section testimonials no-padding">
@@ -146,43 +101,25 @@
     <div class="row no-gutter">
       <div class="flexslider">
         <ul class="slides">
+          {% for testimonial in testimonials %}
           <li>
             <div class="col-md-12">
               <blockquote>
-                <h1>"Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Donec sed odio dui. Phasellus non dolor nibh. Nullam elementum Aenean eu leo quam..." </h1>
-                <p>Rene Brown, Open Window production</p>
+                <h1>{{ testimonial.text1 }}</h1>
+                <p>{{ testimonial.text2 }}</p>
               </blockquote>
             </div>
           </li>
-          <li>
-            <div class="col-md-12">
-              <blockquote>
-                <h1>"Cras dictum tellus dui, vitae sollicitudin ipsum. Phasellus non dolor nibh. Nullam elementum tellus pretium feugiat shasellus non dolor nibh. Nullam elementum tellus pretium feugiat." </h1>
-                <p>Brain Rice, Lexix Private Limited.</p>
-              </blockquote>
-            </div>
-          </li>
-          <li>
-            <div class="col-md-12">
-              <blockquote>
-                <h1>"Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui. Aenean lacinia bibendum nulla sed consectetur...." </h1>
-                <p>Andi Simond, Global Corporate Inc</p>
-              </blockquote>
-            </div>
-          </li>
-          <li>
-            <div class="col-md-12">
-              <blockquote>
-                <h1>"Lorem ipsum dolor sit amet, consectetur adipiscing elitPhasellus non dolor nibh. Nullam elementum tellus pretium feugiat. Cras dictum tellus dui sollcitudin." </h1>
-                <p>Kristy Gabbor, Martix Media</p>
-              </blockquote>
-            </div>
-          </li>
+          {% endfor %}
         </ul>
       </div>
     </div>
   </div>
 </section>
-<!-- Testimonials section --> 
+<!-- Testimonials section -->
+
+<!-- footer section -->
+{% include "footer.html" %}
+<!-- footer section -->
 
 {% endblock %}

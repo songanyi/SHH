@@ -1,11 +1,11 @@
 {% if property_list %}
-    <ul>
-        {% for property in property_list %}
-            <li>
-                {{property.address}}
-            </li>
-        {% endfor %}
-    </ul>
+<ul>
+    {% for property in property_list %}
+    <li>
+        {{property.address}}
+    </li>
+    {% endfor %}
+</ul>
 {% else %}
-    <p> No properties are available. <p>
+<p> No properties are available.</p>
 {% endif %}

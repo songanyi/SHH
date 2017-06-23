@@ -1,80 +1,57 @@
-<!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+{% extends 'base.html' %} {% load static %} {% block content %}
 
-<head>
-  <meta charset="utf-8">
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Apartments in Shanghai:SHH</title>
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/flexslider.css">
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/responsive.css">
-  <link rel="stylesheet" href="css/animate.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-  <link rel="shortcut icon" href="images/logo/favicon.ico">
-</head>
-
-<body>
-
-<!-- Header Section -->
-<section class="tophead" role="tophead">
-  <!-- Navigation Section -->
-  <header id="header">
-    <div class="header-content clearfix"> <a class="logo" href="#"><img src="images/logo/logo.png" width="120px"></a>
-      <nav class="navigation" role="navigation">
-        <ul class="primary-nav">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="renter-guide.html">Renter Guide</a></li>
-          <li><a href="search.html">Search Apartments</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </nav>
-      <a href="#" class="nav-toggle">Menu<span></span></a> </div>
-  </header>
-</section>
-<!-- Navigation Section -->
-
-  <!-- Testlist Section --> 
-  
-<section id="section" class="section test-list">
+<!-- Testlist Section -->
+<section id="search" class="section search">
   <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-8 col-sm-8">
-        <div class="test-list-content">
-          <h4>Test</h4>
-          <p>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Maecenas sed diam eget risus varius blandit sit amet non magna. Nullam quis risus eget urna mollis ornare vel eu leo.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+    <h4>Apartments in Shanghai</h4>
 
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-8 col-sm-8">
-        <div class="test-list-content">
-          <h4>Test</h4>
-          <p>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Maecenas sed diam eget risus varius blandit sit amet non magna. Nullam quis risus eget urna mollis ornare vel eu leo.</p>
+    {% for apartment in apartments.data %}
+    <div class="row search-row">
+      <a href="{{ apartment.url }}">
+        <div class="col-md-4">
+          <img src="{% static apartment.img %}" class="img-responsive search-image" alt="">
         </div>
-      </div>
+        <div class="col-md-8">
+          <h4>{{ apartment.text1 }}</h4>
+          <p>{{ apartment.text2 }}</p>
+        </div>
+      </a>
     </div>
-  </div>
+    <div class="line"></div>
+    {% endfor %}
 
-  
+    <div class="container-fluid">
+      <!--div class="pagination">
+        <span class="step-links">
+        {% if apartments.has_previous %}
+            <a href="/search/?page={{ apartments.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ apartments.number }} of {{ apartments.paginator.num_pages }}.
+        </span> {% if apartments.has_next %}
+        <a href="/search/?page={{ apartments.next_page_number }}">next</a> {% endif %}
+        </span>
+      </div-->
+
+      <ul class="pagination">
+        {% if apartments.data.has_previous %}
+        <li><a href="/search/?page={{ apartments.data.previous_page_number }}"> &lt; Prev</a></li>
+        {% endif %} {% if apartments.show_first %}
+        <li><a href="/search/?page=1"> 1 </a></li>
+        <li><span>...</span></li>
+        {% endif %} {% for page in apartments.page_numbers %} {% ifequal page apartments.data.number %}
+        <li><a class="active" href="/search/?page={{page}}">{{page}}</a></li>
+        {% else %}
+        <li><a href="/search/?page={{page}}">{{page}}</a></li>
+        {% endifequal %} {% endfor %} {% if apartments.show_last %}
+        <li><span class="ellipsis">...</span></li>
+        <li><a href="/search/?page={{ apartments.data.paginator.num_pages }}"> {{ apartments.data.paginator.num_pages }} </a></li>
+        {% endif %} {% if apartments.data.has_next %}
+        <li><a href="/search/?page={{ apartments.data.next_page_number }}">Next &gt;</a></li>
+        {% endif %}
+        </span>
+      </ul>
+    </div>
 </section>
-
-</body>
-</html>
-
-<!-- JS FILES --> 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
-<script src="js/bootstrap.min.js"></script> 
-<script src="js/jquery.flexslider-min.js"></script> 
-<script src="js/retina.min.js"></script> 
-<script src="js/modernizr.js"></script> 
-<script src="js/main.js"></script>
-</body>
-</html>
+{% endblock %}
