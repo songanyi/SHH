@@ -1,45 +1,6 @@
-<!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+{% extends 'base.html' %} {% load static %} {% block content %}
 
-<head>
-  <meta charset="utf-8">
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Apartments in Shanghai:SHH</title>
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/flexslider.css">
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/responsive.css">
-  <link rel="stylesheet" href="css/animate.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-  <link rel="shortcut icon" href="images/logo/favicon.ico">
-</head>
-
-<body>
-
-<!-- Header Section -->
-<section class="tophead" role="tophead">
-  <!-- Navigation Section -->
-  <header id="header">
-    <div class="header-content clearfix"> <a class="logo" href="#"><img src="images/logo/logo.png" width="120px"></a>
-      <nav class="navigation" role="navigation">
-        <ul class="primary-nav">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="renter-guide.html">Renter Guide</a></li>
-          <li><a href="search.html">Find Apartments</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-      <a href="#" class="nav-toggle">Menu<span></span></a> </div>
-  </header>
-</section>
-<!-- Navigation Section -->
-
-  <!-- Testlist Section --> 
-  
+<!-- Testlist Section --> 
 <section id="contact" class="section padding-top side-margin">
 	<h4>ABOUT US</h4>
   <div class="container-fluid no-padding">
@@ -55,20 +16,5 @@
           </div>
   </div>
   </section>
-
-
-
-
-
-</body>
-</html>
-
-<!-- JS FILES --> 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
-<script src="js/bootstrap.min.js"></script> 
-<script src="js/jquery.flexslider-min.js"></script> 
-<script src="js/retina.min.js"></script> 
-<script src="js/modernizr.js"></script> 
-<script src="js/main.js"></script>
-</body>
-</html>
+  
+{% endblock %}
