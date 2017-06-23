@@ -15,11 +15,34 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from habitat import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+    url(r'^index/', views.index, name='index'),
     url(r'^admin/', admin.site.urls),
     url(r'^view-property/', views.view_property, name='view-property'),
     url(r'^add-property/', views.add_property, name="add-property"),
+    url(r'^renter-guide/', views.renter_guide, name="renter-guide"),
+    url(r'^work-details/', views.work_details, name="work-details"),
+    url(r'^contact/', views.contact, name="contact"),
+    url(r'^search/(?P<page>)\w{0,50}/', views.search, name="search"),
+    url(r'^search/', views.searchGet, name="searchGet"),
 ]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+#if settings.DEBUG:
+    
+
+'''
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += patterns('', 
+    url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_URL, 'show_indexes': True}),
+)
+'''

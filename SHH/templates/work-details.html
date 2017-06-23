@@ -1,0 +1,68 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<section id="work-detail" class="section work-detail">
+  <!-- apt details description -->
+  <div class="col-md-4">
+    <div class="detail-content">
+      <h4> {{ apt_name }}</h4>
+      {% for description in descriptions %}
+      <p> {{ description }} </p>
+      {% endfor %}
+      <a class="btn" href="{{ contact_url }}">contact now <i class="fa fa-long-arrow-right"></i></a> </div>
+  </div>
+  <!-- apt img slider -->
+  <div class="container">
+    <div class="col-md-8">
+      <div id="myCarousel" class="carousel apt slide">
+        <ol class="carousel-indicators">
+
+          {% for apt_img in apt_imgs %}
+            <li data-target="#myCarousel" data-slide-to="{{apt_img.idx}}" class=" {{apt_img.class}}"></li>
+          {% endfor %}
+        </ol>
+        <!-- 轮播（Carousel）项目 -->
+        <div class="carousel-inner">
+                    {% for apt_img in apt_imgs %}
+            <div class="item {{ apt_img.class }}">
+              <img src="{% static apt_img.img %}" alt="{{ apt_img.alt }}">
+            </div>
+          {% endfor %}
+        </div>
+        <!-- Controls -->
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span></a>
+        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span></a></div>
+    </div>
+  </div>
+</section>
+<!-- apt img slider -->
+<!-- work details section -->
+
+<!-- Testimonials section -->
+<!-- TODO merge this with index.html testimonials section using inclusion_tag -->
+<section id="testimonials" class="section testimonials no-padding">
+  <div class="container-fluid">
+    <div class="row no-gutter">
+      <div class="flexslider">
+        <ul class="slides">
+          {% for testimonial in testimonials %}
+          <li>
+            <div class="col-md-12">
+              <blockquote>
+                <h1>{{ testimonial.text1 }}</h1>
+                <p>{{ testimonial.text2 }}</p>
+              </blockquote>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Testimonials section -->
+
+<!-- footer section -->
+{% include "footer.html" %}
+<!-- footer section -->
+
+{% endblock %}

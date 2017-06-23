@@ -1,0 +1,124 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<!-- Testlist Section -->
+<section id="renter-guide" class="section renter-guide">
+  <div class="container-fluid">
+    <div class="row  guide-bkg">
+      <div class="col-md-3">
+        <h3 class="guide-head-top">Moving to Shanghai Guide</h3>
+        <p class="guide-head-con">Welcome to Shanghai, the most populous city in the China with over 24 million residents. Whether you're a college
+          student, post-grad or just moving to Shanghai to claim your piece of the city, use this housing guide to help you
+          land an apartment in a neighborhood you like.</p>
+      </div>
+      <div class="col-md-9 guide-head-img"><img src="{% static bgImg %}" class="img-responsive  listing-image" alt="">
+      </div>
+    </div>
+    <h4 class="guide-heading">Why this guide?</h4>
+    <div class="row">
+      <div class="col-md-3 guide-context center">
+
+      </div>
+      <div class="col-md-6 guide-context center">
+        <p>Everyone who lives in Shanghai will have their own stories and ordeals when it comes to finding and renting an apartment.
+          Unfortunately, there is no clean and clear when it comes finding your perfect place in Shanghai.</p>
+        <p>With this guide we hope to give you some pro tips coming from a real estate insider which will arm you with the prerequisite
+          information and preparation so that you can also navigate the rental market like a seasoned veteran. </p>
+      </div>
+      <div class="col-md-3 guide-context center">
+      </div>
+    </div>
+
+    <h4 class="guide-heading">Calculate Affordability</h4>
+    <div class="row">
+      <div class="col-md-6">
+        <h5 class="center">What's your budget?<br></h5>
+      </div>
+      <div class="col-md-6">
+        <h5 class="center">Average Rent in Shanghai<br></h5>
+      </div>
+    </div>
+
+    <h4 class="guide-heading">Find the right Neighborhood</h4>
+
+    <h4 class="guide-heading">Choose your living style</h4>
+
+    <h4 class="guide-heading">Fee vs No-Fee</h4>
+    <div class="row">
+      <div class="col-md-6">
+        <h5>What is a "fee" ("commission fee/broker fee")?<br></h5>
+        <p>A fee is the dollar amount owed to an agent when he or she helps you find an apartment. The fee can range from 8
+          percent to 15 percent of the full year's lease. If the agent says the fee is one month's rent, that's the same
+          as saying it's 8.3 percent of the full year's lease. One month = 8.3 percent of 12 months.</p>
+        <br>
+        <h5>Finding an apartment without paying a fee</h5>
+        <p>There are two ways to avoid a fee. 1) You go straight to landlords and find an apartment without the help of an agent.
+          Or you can use an agent whose fee is paid by the landlord on your behalf.</p>
+      </div>
+    </div>
+    <h4 class="guide-heading">Signing Contract</h4>
+  </div>
+</section>
+
+<!-- Neighbor Tab Section -->
+<section id="Neighbor-tab" class="section tab">
+  <p class="listing-feature">Exploring Neighborhoods</p>
+  <div id="tab">
+    <div class="tabList">
+      <ul>
+        {% for neighborhood in neighhorhoods %}
+        <li class="{{ neighborhood.class }}"> {{ neighborhood.area }} </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="tabCon">
+
+      {% for neighborhood in neighhorhoods %}
+      <div class="{{ neighborhood.class }}">
+        <img src="{% static neighborhood.img %}" class="img-responsive  tab-image" alt="" />
+        <p> {{ neighborhood.text }} </p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<!-- Neighbor Tab Section -->
+<div class="listing-btn">
+  <button class="btn-outline"> Explore More</button>
+</div>
+{% endblock %} {% block javascripts %}
+<script>
+  window.onload = function () {
+    var oDiv = document.getElementById("tab");
+    var oLi = oDiv.getElementsByTagName("div")[0].getElementsByTagName("li");
+    var aCon = oDiv.getElementsByTagName("div")[1].getElementsByTagName("div");
+    var timer = null;
+    for (var i = 0; i < oLi.length; i++) {
+      oLi[i].index = i;
+      oLi[i].onclick = function () {
+        show(this.index);
+      }
+    }
+    function show(a) {
+      index = a;
+      var alpha = 0;
+      for (var j = 0; j < oLi.length; j++) {
+        oLi[j].className = "";
+        aCon[j].className = "";
+        aCon[j].style.opacity = 0;
+        aCon[j].style.filter = "alpha(opacity=0)";
+      }
+      oLi[index].className = "cur";
+      clearInterval(timer);
+      timer = setInterval(function () {
+        alpha += 2;
+        alpha > 100 && (alpha = 100);
+        aCon[index].style.opacity = alpha / 100;
+        aCon[index].style.filter = "alpha(opacity=" + alpha + ")";
+        alpha == 100 && clearInterval(timer);
+      },
+        5)
+    }
+  }
+
+</script>
+{% endblock %}
