@@ -23,6 +23,8 @@ class Contact(models.Model):
     Basic information of the properties
 '''
 class Property(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField()
     address = models.TextField()
     size = models.FloatField()
     pub_date = models.DateTimeField(default=timezone.now)
@@ -51,7 +53,6 @@ class Feature(models.Model):
     Images of the properties
     Reference: https://stackoverflow.com/questions/34006994/how-to-upload-multiple-images-to-a-blog-post-in-django
 '''
-
 def get_image_file(instance, filename):
     return '/'.join(['content', instance.user.username, filename])
 
@@ -59,6 +60,14 @@ def get_image_file(instance, filename):
 class Images(models.Model):
     prop = models.ForeignKey(Property, default=None)
     image = models.ImageField(upload_to=get_image_file, verbose_name='Image')
+
+    def __str__(self):
+        pass
+
+
+class Comment(models.Model):
+    prop = models.ForeignKey(Property, default=None)
+    comment = models.TextField()
 
     def __str__(self):
         pass

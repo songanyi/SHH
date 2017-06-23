@@ -11,6 +11,8 @@ from .forms import PropertyForm
 PAGESIZE = 5
 ADJ_PAGES = 2
 
+# reference getApartments
+# url->id, img->load by foreign key, text1->address, text2->description.
 def getFeatures():
     return [
             {'img': 'images/listing/list1.png', 'text': 'apartment 1', 'url': '/work-details/1'},
@@ -18,6 +20,7 @@ def getFeatures():
             {'img': 'images/listing/list3.png', 'text': 'apartment 3', 'url': '/work-details/3'},
         ]
 
+# can be saved in DB
 def getRenterGuides():
     return [
             {'url': '/renter-guide/', 'text': 'guide 1'},
@@ -27,7 +30,7 @@ def getRenterGuides():
             {'url': '/renter-guide/', 'text': 'guide 5'},
         ]
 
-    
+# can be saved in DB    
 def getPlatforms():
     return [
             {'url': '#', 'text': 'platform 1'},
@@ -35,7 +38,7 @@ def getPlatforms():
             {'url': '#', 'text': 'platform 3'},
         ]
 
-
+# can be saved in DB
 def getPortfolios():
     return [
             {'img': 'images/portfolio/work-1.jpg', 'text1': 'The Shape of Design', 'text2': 'Branding/Graphic', 'url': 'work-details/1'},
@@ -48,7 +51,7 @@ def getPortfolios():
             {'img': 'images/portfolio/work-2.jpg', 'text1': 'czarna kawka', 'text2': 'Branding', 'url': '/work-details/2'},
         ]
 
-
+# can be saved in DB
 def getTestimonials():
     return [
             {'text1':'"Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Donec sed odio dui. Phasellus non dolor nibh. Nullam elementum Aenean eu leo quam..."', 'text2':'Rene Brown, Open Window production'},
@@ -57,11 +60,11 @@ def getTestimonials():
             {'text1':'"Lorem ipsum dolor sit amet, consectetur adipiscing elitPhasellus non dolor nibh. Nullam elementum tellus pretium feugiat. Cras dictum tellus dui sollcitudin."', 'text2':'Kristy Gabbor, Martix Media'},
         ]
 
-
+# can be saved in DB
 def getRenterGuideImg():
     return 'images/guide/guide1.jpg'
 
-
+# can be saved in DB
 def getNeighborhoods():
     return [
         {'area': 'French Concession', 'img': 'images/portfolio/work-2.jpg', 'class': 'cur', 'text': 'The French Concession, the former French colonial possession, is today a charming, historic district known for its European architecture and tree-lined streets, as well as its shopping, bars and cafes. Most of the action centers on the main east-west thoroughfare, Huaihai Road, an upscale shopping destination. You can also tour the area around Dongping Road, where dozens of the city\'s hottest bars are active nightly. Shopping in the area is a bit overpriced, but you\'ll find unique, one-of-a-kind items here that may be worth the money.'},
@@ -73,31 +76,32 @@ def getNeighborhoods():
 
 def getApartments():
     return [
-        {'url': '/work-details/1', 'img': 'images/listing/list1.png', 'text1': 'Apartment 1', 'text2': 'paragraph 1'},
-        {'url': '/work-details/2', 'img': 'images/listing/list2.png', 'text1': 'Apartment 2', 'text2': 'paragraph 2'},
-        {'url': '/work-details/3', 'img': 'images/listing/list3.png', 'text1': 'Apartment 3', 'text2': 'paragraph 3'},
-        {'url': '/work-details/1', 'img': 'images/listing/list1.png', 'text1': 'Apartment 1', 'text2': 'paragraph 1'},
-        {'url': '/work-details/2', 'img': 'images/listing/list2.png', 'text1': 'Apartment 2', 'text2': 'paragraph 2'},
-        {'url': '/work-details/1', 'img': 'images/listing/list1.png', 'text1': 'Apartment 1', 'text2': 'paragraph 1'},
-        {'url': '/work-details/2', 'img': 'images/listing/list2.png', 'text1': 'Apartment 2', 'text2': 'paragraph 2'},
-        {'url': '/work-details/3', 'img': 'images/listing/list3.png', 'text1': 'Apartment 3', 'text2': 'paragraph 3'},
-        {'url': '/work-details/1', 'img': 'images/listing/list1.png', 'text1': 'Apartment 1', 'text2': 'paragraph 1'},
-        {'url': '/work-details/2', 'img': 'images/listing/list2.png', 'text1': 'Apartment 2', 'text2': 'paragraph 2'},
-        {'url': '/work-details/1', 'img': 'images/listing/list1.png', 'text1': 'Apartment 1', 'text2': 'paragraph 1'},
-        {'url': '/work-details/2', 'img': 'images/listing/list2.png', 'text1': 'Apartment 2', 'text2': 'paragraph 2'},
-        {'url': '/work-details/3', 'img': 'images/listing/list3.png', 'text1': 'Apartment 3', 'text2': 'paragraph 3'},
-        {'url': '/work-details/1', 'img': 'images/listing/list1.png', 'text1': 'Apartment 1', 'text2': 'paragraph 1'},
-        {'url': '/work-details/2', 'img': 'images/listing/list2.png', 'text1': 'Apartment 2', 'text2': 'paragraph 2'},
-        {'url': '/work-details/1', 'img': 'images/listing/list1.png', 'text1': 'Apartment 1', 'text2': 'paragraph 1'},
-        {'url': '/work-details/2', 'img': 'images/listing/list2.png', 'text1': 'Apartment 2', 'text2': 'paragraph 2'},
-        {'url': '/work-details/3', 'img': 'images/listing/list3.png', 'text1': 'Apartment 3', 'text2': 'paragraph 3'},
-        {'url': '/work-details/1', 'img': 'images/listing/list1.png', 'text1': 'Apartment 1', 'text2': 'paragraph 1'},
-        {'url': '/work-details/2', 'img': 'images/listing/list2.png', 'text1': 'Apartment 2', 'text2': 'paragraph 2'},
-        {'url': '/work-details/1', 'img': 'images/listing/list1.png', 'text1': 'Apartment 1', 'text2': 'paragraph 1'},
-        {'url': '/work-details/2', 'img': 'images/listing/list2.png', 'text1': 'Apartment 2', 'text2': 'paragraph 2'},
-        {'url': '/work-details/3', 'img': 'images/listing/list3.png', 'text1': 'Apartment 3', 'text2': 'paragraph 3'},
-        {'url': '/work-details/1', 'img': 'images/listing/list1.png', 'text1': 'Apartment 1', 'text2': 'paragraph 1'},
-        {'url': '/work-details/2', 'img': 'images/listing/list2.png', 'text1': 'Apartment 2', 'text2': 'paragraph 2'},
+        # url->id, img->load by foreign key, text1->address, text2->description.
+        {'url': '/work-details/1', 'img': 'images/listing/list1.png', 'text1': 'Apartment 1', 'text2': 'paragraph 1', 'tags':[],},
+        {'url': '/work-details/2', 'img': 'images/listing/list2.png', 'text1': 'Apartment 2', 'text2': 'paragraph 2', 'tags':[],},
+        {'url': '/work-details/3', 'img': 'images/listing/list3.png', 'text1': 'Apartment 3', 'text2': 'paragraph 3', 'tags':[],},
+        {'url': '/work-details/1', 'img': 'images/listing/list1.png', 'text1': 'Apartment 1', 'text2': 'paragraph 1', 'tags':[],},
+        {'url': '/work-details/2', 'img': 'images/listing/list2.png', 'text1': 'Apartment 2', 'text2': 'paragraph 2', 'tags':[],},
+        {'url': '/work-details/1', 'img': 'images/listing/list1.png', 'text1': 'Apartment 1', 'text2': 'paragraph 1', 'tags':[],},
+        {'url': '/work-details/2', 'img': 'images/listing/list2.png', 'text1': 'Apartment 2', 'text2': 'paragraph 2', 'tags':[],},
+        {'url': '/work-details/3', 'img': 'images/listing/list3.png', 'text1': 'Apartment 3', 'text2': 'paragraph 3', 'tags':[],},
+        {'url': '/work-details/1', 'img': 'images/listing/list1.png', 'text1': 'Apartment 1', 'text2': 'paragraph 1', 'tags':[],},
+        {'url': '/work-details/2', 'img': 'images/listing/list2.png', 'text1': 'Apartment 2', 'text2': 'paragraph 2', 'tags':[],},
+        {'url': '/work-details/1', 'img': 'images/listing/list1.png', 'text1': 'Apartment 1', 'text2': 'paragraph 1', 'tags':[],},
+        {'url': '/work-details/2', 'img': 'images/listing/list2.png', 'text1': 'Apartment 2', 'text2': 'paragraph 2', 'tags':[],},
+        {'url': '/work-details/3', 'img': 'images/listing/list3.png', 'text1': 'Apartment 3', 'text2': 'paragraph 3', 'tags':[],},
+        {'url': '/work-details/1', 'img': 'images/listing/list1.png', 'text1': 'Apartment 1', 'text2': 'paragraph 1', 'tags':[],},
+        {'url': '/work-details/2', 'img': 'images/listing/list2.png', 'text1': 'Apartment 2', 'text2': 'paragraph 2', 'tags':[],},
+        {'url': '/work-details/1', 'img': 'images/listing/list1.png', 'text1': 'Apartment 1', 'text2': 'paragraph 1', 'tags':[],},
+        {'url': '/work-details/2', 'img': 'images/listing/list2.png', 'text1': 'Apartment 2', 'text2': 'paragraph 2', 'tags':[],},
+        {'url': '/work-details/3', 'img': 'images/listing/list3.png', 'text1': 'Apartment 3', 'text2': 'paragraph 3', 'tags':[],},
+        {'url': '/work-details/1', 'img': 'images/listing/list1.png', 'text1': 'Apartment 1', 'text2': 'paragraph 1', 'tags':[],},
+        {'url': '/work-details/2', 'img': 'images/listing/list2.png', 'text1': 'Apartment 2', 'text2': 'paragraph 2', 'tags':[],},
+        {'url': '/work-details/1', 'img': 'images/listing/list1.png', 'text1': 'Apartment 1', 'text2': 'paragraph 1', 'tags':[],},
+        {'url': '/work-details/2', 'img': 'images/listing/list2.png', 'text1': 'Apartment 2', 'text2': 'paragraph 2', 'tags':[],},
+        {'url': '/work-details/3', 'img': 'images/listing/list3.png', 'text1': 'Apartment 3', 'text2': 'paragraph 3', 'tags':[],},
+        {'url': '/work-details/1', 'img': 'images/listing/list1.png', 'text1': 'Apartment 1', 'text2': 'paragraph 1', 'tags':[],},
+        {'url': '/work-details/2', 'img': 'images/listing/list2.png', 'text1': 'Apartment 2', 'text2': 'paragraph 2', 'tags':[],},
     ]
 
 
@@ -133,11 +137,14 @@ def getAptDetails(id):
                     'ut fermentum massa justo sit amet risus. Maecenas sed diam eget risus varius blandit sit amet non magna. Nullam quis',
                     'risus eget urna mollis ornare vel eu leo.',],
         'contact_url': '/people/?id=1',
+        'tags': [],
+        # Image
         'apt_imgs': [
             {'img': 'images/slider/slid1.jpg', 'alt': 'First slide', 'class': 'active', "idx": "0"},
             {'img': 'images/slider/slid2.jpg', 'alt': 'Second slide', 'class': '', "idx": "1"},
             {'img': 'images/slider/slid3.jpg', 'alt': 'Third slide', 'class': '', "idx": "2"},
         ],
+        # Comment
         'testimonials': [
             {'text1':'"Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Donec sed odio dui. Phasellus non dolor nibh. Nullam elementum Aenean eu leo quam..."', 'text2':'Rene Brown, Open Window production'},
             {'text1':'"Cras dictum tellus dui, vitae sollicitudin ipsum. Phasellus non dolor nibh. Nullam elementum tellus pretium feugiat shasellus non dolor nibh. Nullam elementum tellus pretium feugiat."', 'text2':'Brain Rice, Lexix Private Limited.'},
