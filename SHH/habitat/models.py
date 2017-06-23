@@ -1,12 +1,14 @@
 from django.db import models
 from django.utils import timezone
 
-#https://github.com/alex/django-taggit
+# https://github.com/alex/django-taggit
 from taggit.managers import TaggableManager
 
 '''
     Contacts
 '''
+
+
 class Contact(models.Model):
     line1 = models.CharField(max_length=150)
     line2 = models.CharField(max_length=150)
@@ -19,9 +21,12 @@ class Contact(models.Model):
     def __str__(self):
         pass
 
+
 '''
     Basic information of the properties
 '''
+
+
 class Property(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
@@ -53,6 +58,8 @@ class Feature(models.Model):
     Images of the properties
     Reference: https://stackoverflow.com/questions/34006994/how-to-upload-multiple-images-to-a-blog-post-in-django
 '''
+
+
 def get_image_file(instance, filename):
     return '/'.join(['content', instance.user.username, filename])
 

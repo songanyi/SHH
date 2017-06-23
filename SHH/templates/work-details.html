@@ -17,15 +17,15 @@
         <ol class="carousel-indicators">
 
           {% for apt_img in apt_imgs %}
-            <li data-target="#myCarousel" data-slide-to="{{apt_img.idx}}" class=" {{apt_img.class}}"></li>
+          <li data-target="#myCarousel" data-slide-to="{{apt_img.idx}}" class=" {{apt_img.class}}"></li>
           {% endfor %}
         </ol>
         <!-- 轮播（Carousel）项目 -->
         <div class="carousel-inner">
-                    {% for apt_img in apt_imgs %}
-            <div class="item {{ apt_img.class }}">
-              <img src="{% static apt_img.img %}" alt="{{ apt_img.alt }}">
-            </div>
+          {% for apt_img in apt_imgs %}
+          <div class="item {{ apt_img.class }}">
+            <img src="{% static apt_img.img %}" alt="{{ apt_img.alt }}">
+          </div>
           {% endfor %}
         </div>
         <!-- Controls -->
