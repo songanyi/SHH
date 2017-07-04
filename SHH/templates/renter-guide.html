@@ -212,7 +212,6 @@
       <button class="btn-outline">More About Fees and Agents</button>
     </div>
 
-
     <h4 class="guide-heading">Signing and Deposits</h4>
     <div class="row">
       <div class="col-sm-5">
@@ -323,7 +322,6 @@
       <div class="col-md-3"></div>
     </div>
 
-
     <div class="listing-btn">
       <button id="backtotop" class="btn-outline"> Back To Top</button>
     </div>
@@ -337,6 +335,9 @@
 {# {% include "footer.html" %} #}
 <!-- footer section -->
 
+{% endblock %} 
+
+{% block javascript %}
 <script language="Javascript">
   document.oncontextmenu = new Function("event.returnValue=false");
   document.onselectstart = new Function("event.returnValue=false");
@@ -347,23 +348,20 @@
   <iframe src="*.htm"></iframe>
 </noscript>
 
-
 <script>
-    var timer = null;
-    backtotop.onclick = function () {
-      cancelAnimationFrame(timer);
-      timer = requestAnimationFrame(function fn() {
-        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
-        if (oTop > 0) {
-          scrollTo(0, oTop * 0.92);
-          timer = requestAnimationFrame(fn);
-        } else {
-          cancelAnimationFrame(timer);
-        }
-      });
-    }
+  var timer = null;
+  backtotop.onclick = function () {
+    cancelAnimationFrame(timer);
+    timer = requestAnimationFrame(function fn() {
+      var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+      if (oTop > 0) {
+        scrollTo(0, oTop * 0.92);
+        timer = requestAnimationFrame(fn);
+      } else {
+        cancelAnimationFrame(timer);
+      }
+    });
+  }
 
 </script>
-
-
 {% endblock %}

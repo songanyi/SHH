@@ -19,7 +19,8 @@
     <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/login-register.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="shortcut icon" href="{% static 'images/logo/favicon.ico'%}">
+    <link rel="shortcut icon" href="{% static 'images/logo/favicon.ico'%}"> 
+    {% block stylesheet %}{% endblock %}
 </head>
 
 <body>
@@ -100,13 +101,14 @@
     </div>
 
     <!-- JS FILES -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/jquery.flexslider-min.js' %}"></script>
     <script src="{% static 'js/retina.min.js' %}"></script>
     <script src="{% static 'js/modernizr.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/login-register.js' %}"></script>
+    {% block javascript %}{% endblock %}
 </body>
 
 </html>
