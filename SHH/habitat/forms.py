@@ -1,12 +1,15 @@
 from .models import Property
 from django import forms
-from taggit.forms import TagWidget
+from django.utils.translation import gettext as _
+#from taggit.forms import TagWidget
 
 class PropertyForm(forms.ModelForm):
-    
     class Meta:
         model = Property
-        fields = ('name', 'address', 'size', 'description', 'email', 'phone', 'tags')
+        fields = ('name', 'address', 'room_type',
+             'size', 'property_type', 'price',
+             'email', 'phone', 'features')
         widgets = {
-            'tags': TagWidget()
+            'room_type': forms.RadioSelect,
+            'property_type': forms.RadioSelect,
         }
