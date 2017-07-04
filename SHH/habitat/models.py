@@ -7,12 +7,11 @@ from taggit.managers import TaggableManager
 from multiselectfield import MultiSelectField
 from django.utils.translation import gettext as _
 
-'''
-    Contacts
-'''
-
 
 class Contact(models.Model):
+    '''
+        Contacts
+    '''
     line1 = models.CharField(max_length=150)
     line2 = models.CharField(max_length=150)
     postalcode = models.CharField(max_length=10)
@@ -25,34 +24,29 @@ class Contact(models.Model):
         pass
 
 
-'''
-    Basic information of the properties
-'''
-
-
-
-'''
-我们可能需要一个 物业类型/地址/面积/房型（studio/1br/2br/3br）/租金价格/联系方式（eMail）/然后和一个features(big balcony/new renovation/)
-'''
 class Property(models.Model):
+    '''
+        Basic information of the properties
+        我们可能需要一个 物业类型/地址/面积/房型（studio/1br/2br/3br）/租金价格/联系方式（eMail）/然后和一个features(big balcony/new renovation/)
+    '''
     FEATURE_CHOICES = (('item_key1', _('Item title 1.1')),
-                    ('item_key2', _('Item title 1.2')),
-                    ('item_key3', _('Item title 1.3')),
-                    ('item_key4', _('Item title 1.4')),
-                    ('item_key5', _('Item title 1.5')),
-                    )
-    
+                       ('item_key2', _('Item title 1.2')),
+                       ('item_key3', _('Item title 1.3')),
+                       ('item_key4', _('Item title 1.4')),
+                       ('item_key5', _('Item title 1.5')),
+                       )
+
     OLD_HOUSE = 'old_house'
     HIGH_RISE = 'high_rise'
     VILLA = 'villa'
     SERVICE_APT = 'service_apt'
 
     PROPERTY_CHOICES = (
-                    (OLD_HOUSE, _('Old house')), 
-                    (HIGH_RISE, _('High-rise')), 
-                    (VILLA, _('Villa')), 
-                    (SERVICE_APT, _('Service Apartment')),
-                    )
+        (OLD_HOUSE, _('Old house')),
+        (HIGH_RISE, _('High-rise')),
+        (VILLA, _('Villa')),
+        (SERVICE_APT, _('Service Apartment')),
+    )
 
     STUDIO = 'studio'
     LOFT = 'loft'
@@ -61,19 +55,23 @@ class Property(models.Model):
     THREE_BR = 'three_br'
     FOUR_BR_PLUS = 'four_br_plus'
 
-    ROOM_CHOICE = ((STUDIO, _('Studio')), 
-                    (LOFT, _('Loft')),
-                    (ONE_BR, _('1BR')), 
-                    (TWO_BR, _('2BR')), 
-                    (THREE_BR, _('3BR')),
-                    (FOUR_BR_PLUS, _('4BR+')),
-                    )
+    ROOM_CHOICE = ((STUDIO, _('Studio')),
+                   (LOFT, _('Loft')),
+                   (ONE_BR, _('1BR')),
+                   (TWO_BR, _('2BR')),
+                   (THREE_BR, _('3BR')),
+                   (FOUR_BR_PLUS, _('4BR+')),
+                   )
 
-    name = models.CharField('Your property name:', default='', max_length=50, blank=True)
+    name = models.CharField('Your property name:',
+                            default='', max_length=50, blank=True)
     #description = models.TextField()
-    address = models.CharField('* Input your address', max_length=50, blank=False)
-    room_type = models.CharField('* Select Room Type', blank=False, max_length=50, default='0', choices=ROOM_CHOICE)
-    property_type = models.CharField('* Select Property Type', blank=False, max_length=50, default='0', choices=PROPERTY_CHOICES)
+    address = models.CharField(
+        '* Input your address', max_length=50, blank=False)
+    room_type = models.CharField(
+        '* Select Room Type', blank=False, max_length=50, default='0', choices=ROOM_CHOICE)
+    property_type = models.CharField(
+        '* Select Property Type', blank=False, max_length=50, default='0', choices=PROPERTY_CHOICES)
     size = models.FloatField('* Room Size', blank=False)
     price = models.IntegerField('* Price', blank=False)
     pub_date = models.DateTimeField(default=timezone.now)
@@ -81,8 +79,8 @@ class Property(models.Model):
     email = models.EmailField('* Email', blank=False)
     phone = models.CharField('* Phone', blank=False, max_length=18)
     features = MultiSelectField(_("Features"), choices=FEATURE_CHOICES,
-                                 max_choices=3,
-                                 max_length=3, null=True)
+                                max_choices=3,
+                                max_length=3, null=True)
 
     def __str__(self):
         pass
@@ -100,17 +98,17 @@ class Feature(models.Model):
         pass
 '''
 
-'''
-    Images of the properties
-    Reference: https://stackoverflow.com/questions/34006994/how-to-upload-multiple-images-to-a-blog-post-in-django
-'''
-
 
 def get_image_file(instance, filename):
+
     return '/'.join(['content', instance.user.username, filename])
 
 
 class Images(models.Model):
+    '''
+        Images of the properties
+        Reference: https://stackoverflow.com/questions/34006994/how-to-upload-multiple-images-to-a-blog-post-in-django
+    '''
     prop = models.ForeignKey(Property, default=None)
     image = models.ImageField(upload_to=get_image_file, verbose_name='Image')
 
