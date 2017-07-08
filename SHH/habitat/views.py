@@ -307,9 +307,10 @@ def upload_image_get(request):
 #@login_required(login_url='/accounts/login/')
 def upload_image(request, pid):
     # return render(request, 'habitat/images_basicplus_form.html', {})
+    # check pid and user
     return render(request, 'habitat/images_angular_form.html', {'pid': pid})
 
-
+#@login_required(login_url='/accounts/login/')
 def add_image(request, pid):
     return render(request, 'add-image.html', {'pid': pid})
 
@@ -401,11 +402,25 @@ class PictureDeleteView(DeleteView):
         return response
 
 
+def belongsToProperty(image, pid):
+    tokens = image.file.name.split(os.sep)
+    """
+    print(tokens)
+    print(tokens[-2])
+    print(pid)
+    """
+    if len(tokens) < 2:
+        return False
+    return pid == tokens[-2]
+
+
 class PictureListView(ListView):
     model = Images
 
     def render_to_response(self, context, **response_kwargs):
-        files = [serialize(p) for p in self.get_queryset()]
+        pid = self.kwargs['pid']
+        print(self.get_queryset())
+        files = [serialize(p) for p in self.get_queryset() if belongsToProperty(p, pid)]
         data = {'files': files}
         response = JSONResponse(data, mimetype=response_mimetype(self.request))
         response['Content-Disposition'] = 'inline; filename=files.json'

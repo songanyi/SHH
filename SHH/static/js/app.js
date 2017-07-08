@@ -18,7 +18,8 @@
 
     var isOnGitHub = window.location.hostname === 'blueimp.github.io',
         url = '/upload/angular/',
-        urlview = '/upload/view/';
+        urlview = '/upload/view/',
+        pid = "";
 
     angular.module('demo', [
         'blueimp.fileupload'
@@ -53,10 +54,16 @@
                 $scope.options = {
                     url: url
                 };
+
                 if (!isOnGitHub) {
                     $scope.loadingFiles = true;
-                    $http.get(urlview)
-                        .then(
+
+                    // add $scope.init to add pid as sufix
+                    $scope.init = function (pid) {
+                        pid = pid;
+                        //console.log("app.js:59", urlview + pid);
+                        $http.get(urlview + pid)
+                            .then(
                             function (response) {
                                 $scope.loadingFiles = false;
                                 $scope.queue = response.data.files || [];
@@ -64,7 +71,9 @@
                             function () {
                                 $scope.loadingFiles = false;
                             }
-                        );
+                            );
+                    }
+                    //console.log("app.js:64", urlview + pid);
                 }
             }
         ])
@@ -93,7 +102,7 @@
                             function () {
                                 state = 'rejected';
                             }
-                        );
+                            );
                     };
                 } else if (!file.$cancel && !file._index) {
                     file.$cancel = function () {

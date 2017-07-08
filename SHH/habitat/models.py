@@ -84,7 +84,9 @@ class Property(models.Model):
                                 max_choices=3,
                                 max_length=300, null=True)
     submitted = models.BooleanField(default=False)
-
+    # TODO add user
+    #user = models.ForeignKey(User)
+    
     def __str__(self):
         return "property_id:{0}".format(self.id)
 

@@ -10,5 +10,6 @@ urlpatterns = [
     url(r'^new/$', PictureCreateView.as_view(), name='upload-new'),
     url(r'^angular/$', AngularVersionCreateView.as_view(), name='upload-angular'),
     url(r'^delete/(?P<pk>\d+)$', PictureDeleteView.as_view(), name='upload-delete'),
-    url(r'^view/$', PictureListView.as_view(), name='upload-view'),
+    #url(r'^view/$', PictureListView.as_view(), name='upload-view'),
+    url(r'^view/(?P<pid>\d+)$', PictureListView.as_view(), name='upload-view'),
 ]
