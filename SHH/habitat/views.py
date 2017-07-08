@@ -419,7 +419,7 @@ class PictureListView(ListView):
 
     def render_to_response(self, context, **response_kwargs):
         pid = self.kwargs['pid']
-        print(self.get_queryset())
+        #print(self.get_queryset())
         files = [serialize(p) for p in self.get_queryset() if belongsToProperty(p, pid)]
         data = {'files': files}
         response = JSONResponse(data, mimetype=response_mimetype(self.request))
