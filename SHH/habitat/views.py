@@ -1,12 +1,30 @@
+# encoding: utf-8
+import json
+
 from django.shortcuts import render
 from django.http import HttpResponse
 from django import forms
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.generic import CreateView, DeleteView, ListView
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 
 from .models import Property
 from .models import Contact
 from .models import Images
 from .forms import PropertyForm
+from .response import JSONResponse, response_mimetype
+from .serialize import serialize
+
+import os
+from django.template.context_processors import csrf
+from django.conf import settings
+from django.core.urlresolvers import reverse
+from django.views import generic
+from django.views.decorators.http import require_POST
+from jfu.http import upload_receive, UploadResponse, JFUResponse
+from django.contrib.auth.decorators import login_required
+
 
 PAGESIZE = 5
 ADJ_PAGES = 2
@@ -30,11 +48,11 @@ def getFeatures():
 
 def getRenterGuides():
     return [
-        {'url': '/renter-guide/', 'text': 'guide 1'},
-        {'url': '/renter-guide/', 'text': 'guide 2'},
-        {'url': '/renter-guide/', 'text': 'guide 3'},
-        {'url': '/renter-guide/', 'text': 'guide 4'},
-        {'url': '/renter-guide/', 'text': 'guide 5'},
+        {'url': '/renter-guide/', 'text': 'Find Your Style'},
+        {'url': '/renter-guide/', 'text': 'Explore Neighborhood'},
+        {'url': '/renter-guide/', 'text': 'Fee vs No-Fee'},
+        {'url': '/renter-guide/', 'text': 'Signing and Deposits'},
+        {'url': '/renter-guide/', 'text': 'Bait and Switch'},
     ]
 
 # can be saved in DB
@@ -42,9 +60,10 @@ def getRenterGuides():
 
 def getPlatforms():
     return [
-        {'url': '#', 'text': 'platform 1'},
-        {'url': '#', 'text': 'platform 2'},
-        {'url': '#', 'text': 'platform 3'},
+        {'url': '#', 'text': 'Facebook'},
+        {'url': '#', 'text': 'Twitter'},
+        {'url': '#', 'text': 'Weibo'},
+        {'url': '#', 'text': 'Slack Group'},
     ]
 
 # can be saved in DB
@@ -94,6 +113,7 @@ def getRenterGuideImg():
 # can be saved in DB
 
 
+# Obsolete
 def getNeighborhoods():
     return [
         {'area': 'French Concession', 'img': 'images/portfolio/work-2.jpg', 'class': 'cur', 'text': 'The French Concession, the former French colonial possession, is today a charming, historic district known for its European architecture and tree-lined streets, as well as its shopping, bars and cafes. Most of the action centers on the main east-west thoroughfare, Huaihai Road, an upscale shopping destination. You can also tour the area around Dongping Road, where dozens of the city\'s hottest bars are active nightly. Shopping in the area is a bit overpriced, but you\'ll find unique, one-of-a-kind items here that may be worth the money.'},
@@ -101,6 +121,8 @@ def getNeighborhoods():
         {'area': 'Jing An', 'img': 'images/portfolio/work-2.jpg', 'class': '', 'text': 'Jing An, the former French colonial possession, is today a charming, historic district known for its European architecture and tree-lined streets, as well as its shopping, bars and cafes. Most of the action centers on the main east-west thoroughfare, Huaihai Road, an upscale shopping destination. You can also tour the area around Dongping Road, where dozens of the city\'s hottest bars are active nightly. Shopping in the area is a bit overpriced, but you\'ll find unique, one-of-a-kind items here that may be worth the money.'},
         {'area': 'Huang Pu', 'img': 'images/portfolio/work-2.jpg', 'class': '', 'text': 'Huang Pu, the former French colonial possession, is today a charming, historic district known for its European architecture and tree-lined streets, as well as its shopping, bars and cafes. Most of the action centers on the main east-west thoroughfare, Huaihai Road, an upscale shopping destination. You can also tour the area around Dongping Road, where dozens of the city\'s hottest bars are active nightly. Shopping in the area is a bit overpriced, but you\'ll find unique, one-of-a-kind items here that may be worth the money.'},
     ]
+
+# TODO from db
 
 
 def getApartments():
@@ -182,6 +204,8 @@ def getPagedApartments(page):
         'show_first': 1 not in page_numbers,
         'show_last': paginator.num_pages not in page_numbers,
     }
+
+# TODO
 
 
 def getAptDetails(id):
@@ -274,30 +298,115 @@ def view_property(request):
     return render(request, 'view-property.html', context)
 
 
-def add_property(request):
+#@login_required(login_url='/accounts/login/')
+def upload_image_get(request):
+    # return render(request, 'habitat/images_basicplus_form.html', {})
+    return render(request, 'habitat/images_angular_form.html', {'pid': request.GET.get('pid')})
 
+
+#@login_required(login_url='/accounts/login/')
+def upload_image(request, pid):
+    # return render(request, 'habitat/images_basicplus_form.html', {})
+    return render(request, 'habitat/images_angular_form.html', {'pid': pid})
+
+
+def add_image(request, pid):
+    return render(request, 'add-image.html', {'pid': pid})
+
+
+#@login_required(login_url='/accounts/login/')
+def add_property(request):
     if request.method == 'POST':
         form = PropertyForm(request.POST)
+        print(form)
+        print(form.is_valid())
         if form.is_valid():
-            address = form.cleaned_data['address']
-            size = form.cleaned_data['size']
-            email = form.cleaned_data['email']
-            phone = form.cleaned_data['phone']
-            tags = form.cleaned_data['tags']
+            prop = form.save()
+            return HttpResponseRedirect(reverse('add-image', args=(prop.id,)))
 
-            prop = Property.objects.create(
-                address=address, size=size, email=email, phone=phone)
-            '''
-            prop.size = size
-            prop.email = email
-            prop.phone = phone
-            prop.pub_date = now
-            '''
-            prop.tags.add(*tags)
-            prop.save()
-
-            return HttpResponse('/settings/')
+        else:
+            data = json.dumps(form.errors)
+            print("error:")
+            print(data)
     else:
         form = PropertyForm()
 
     return render(request, 'add-property.html', {'form': form})
+
+
+class PictureCreateView(CreateView):
+    model = Images
+    fields = "__all__"
+    #fields = ['files', 'prop_id']
+
+    #@login_required(login_url='/accounts/login/')
+    def form_valid(self, form):
+        images = form.save(commit=False)
+        #images.user = request.user
+        images.save()
+        form.save_m2m()
+
+        self.object = images
+        files = [serialize(self.object)]
+
+        data = {'files': files}
+        response = JSONResponse(data, mimetype=response_mimetype(self.request))
+        response['Content-Disposition'] = 'inline; filename=files.json'
+        print(response)
+        return response
+
+    def form_invalid(self, form):
+        data = json.dumps(form.errors)
+        print("error:")
+        print(data)
+        # handle unauthorized users
+        return HttpResponse(content=data, status=400, content_type='application/json')
+
+
+# TODO remove
+class BasicVersionCreateView(PictureCreateView):
+    template_name_suffix = '_basic_form'
+
+# TODO remove
+
+
+class BasicPlusVersionCreateView(PictureCreateView):
+    template_name_suffix = '_basicplus_form'
+
+
+class AngularVersionCreateView(PictureCreateView):
+    template_name_suffix = '_angular_form'
+
+
+"""
+    fields = ['file']
+
+    def form_valid(self, form):
+        print("form")
+        print(form)
+        print("-----")
+        form.instance.prop = Property.objects.get(pk=form.cleaned_data['prop_id'])
+        return super(AngularVersionCreateView, self).form_valid(form)
+"""
+
+
+class PictureDeleteView(DeleteView):
+    model = Images
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.delete()
+        response = JSONResponse(True, mimetype=response_mimetype(request))
+        response['Content-Disposition'] = 'inline; filename=files.json'
+        return response
+
+
+class PictureListView(ListView):
+    model = Images
+
+    def render_to_response(self, context, **response_kwargs):
+        files = [serialize(p) for p in self.get_queryset()]
+        data = {'files': files}
+        response = JSONResponse(data, mimetype=response_mimetype(self.request))
+        response['Content-Disposition'] = 'inline; filename=files.json'
+        return response

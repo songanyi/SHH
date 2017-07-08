@@ -1,7 +1,24 @@
-{% extends 'base.html' %} {% block content %}
-<h1>New Property</h1>
+{% extends 'base.html' %} {% load static %} {% block content%}
+<!--script src="{% static 'js/jquery.min.js' %}"></script>
+<script type="text/javascript">
+    $(function () {
+        createFrame();
+    })
+
+    function createFrame() {
+        window.frames["images"].location.href = "/upload-image";
+    }
+</script-->
+
+<section id="add_property" class="section padding-top side-margin">
+<h2>New Property</h2>
 <form method="POST" class="post-form">
     {% csrf_token %} {{ form.as_p }}
+
+    <!--label> Upload Images </label>
+    <iframe src="/upload-image" id="images" name="images" width="100%" style="height: 310px;" frameborder="0"></iframe-->
+    
     <input type="submit" value="Submit">
 </form>
+</section>
 {% endblock %}

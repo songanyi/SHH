@@ -7,6 +7,8 @@ from taggit.managers import TaggableManager
 from multiselectfield import MultiSelectField
 from django.utils.translation import gettext as _
 
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 class Contact(models.Model):
     '''
@@ -80,10 +82,11 @@ class Property(models.Model):
     phone = models.CharField('* Phone', blank=False, max_length=18)
     features = MultiSelectField(_("Features"), choices=FEATURE_CHOICES,
                                 max_choices=3,
-                                max_length=3, null=True)
+                                max_length=300, null=True)
+    submitted = models.BooleanField(default=False)
 
     def __str__(self):
-        pass
+        return "property_id:{0}".format(self.id)
 
 
 '''
@@ -100,8 +103,11 @@ class Feature(models.Model):
 
 
 def get_image_file(instance, filename):
+    return '/'.join(['content', instance.user.id, str(instance.prop_id), filename])
 
-    return '/'.join(['content', instance.user.username, filename])
+
+def get_image_file_by_id(instance, filename):
+    return '/'.join(['content', str(instance.prop_id), filename])
 
 
 class Images(models.Model):
@@ -109,11 +115,41 @@ class Images(models.Model):
         Images of the properties
         Reference: https://stackoverflow.com/questions/34006994/how-to-upload-multiple-images-to-a-blog-post-in-django
     '''
+    '''
     prop = models.ForeignKey(Property, default=None)
     image = models.ImageField(upload_to=get_image_file, verbose_name='Image')
 
     def __str__(self):
         pass
+
+    '''
+    #
+    
+    # TODO add user after can read data
+    #user = models.ForeignKey(User)
+    # TODO add this after user can add
+    #file = models.ImageField(upload_to=get_image_file, verbose_name='Image', blank=True, null=True)
+    
+    prop_id = models.IntegerField(default=-1)
+    #file = models.ImageField(upload_to="pictures", verbose_name='Image', blank=True, null=True)
+    file = models.ImageField(upload_to=get_image_file_by_id, verbose_name='Image', blank=True, null=True)
+    slug = models.SlugField(max_length=50, blank=True)
+
+    def __str__(self):
+        return self.file.name
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('upload-new', )
+
+    def save(self, *args, **kwargs):
+        self.slug = self.file.name
+        super(Images, self).save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        """delete -- Remove to leave file."""
+        self.file.delete(False)
+        super(Images, self).delete(*args, **kwargs)
 
 
 class Comment(models.Model):
