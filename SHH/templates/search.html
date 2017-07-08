@@ -7,13 +7,13 @@
 
     {% for apartment in apartments.data %}
     <div class="row search-row">
-      <a href="{{ apartment.url }}">
+      <a href="/work-details/{{ apartment.id }}">
         <div class="col-md-4">
-          <img src="{% static apartment.img %}" class="img-responsive search-image" alt="">
+          <img src="{{ apartment.img }}" class="img-responsive search-image" alt="">
         </div>
         <div class="col-md-8">
-          <h4>{{ apartment.text1 }}</h4>
-          <p>{{ apartment.text2 }}</p>
+          <h4>{{ apartment.name }}</h4>
+          <p>{{ apartment.address }}</p>
         </div>
       </a>
     </div>
@@ -35,20 +35,24 @@
       </div-->
 
       <ul class="pagination">
-        {% if apartments.data.has_previous %}
-        <li><a href="/search/?page={{ apartments.data.previous_page_number }}"> &lt; Prev</a></li>
+        {% if apartments.has_previous %}
+        <li><a href="/search/?page={{ apartments.previous_page_number }}"> &lt; Prev</a></li>
         {% endif %} {% if apartments.show_first %}
         <li><a href="/search/?page=1"> 1 </a></li>
         <li><span>...</span></li>
-        {% endif %} {% for page in apartments.page_numbers %} {% ifequal page apartments.data.number %}
-        <li><a class="active" href="/search/?page={{page}}">{{page}}</a></li>
-        {% else %}
-        <li><a href="/search/?page={{page}}">{{page}}</a></li>
-        {% endifequal %} {% endfor %} {% if apartments.show_last %}
-        <li><span class="ellipsis">...</span></li>
-        <li><a href="/search/?page={{ apartments.data.paginator.num_pages }}"> {{ apartments.data.paginator.num_pages }} </a></li>
-        {% endif %} {% if apartments.data.has_next %}
-        <li><a href="/search/?page={{ apartments.data.next_page_number }}">Next &gt;</a></li>
+        {% endif %} {% for page in apartments.page_numbers %} 
+          {% ifequal page apartments.number %}
+            <li><a class="active" href="/search/?page={{page}}">{{page}}</a></li>
+          {% else %}
+          <li><a href="/search/?page={{page}}">{{page}}</a></li>
+          {% endifequal %} 
+        {% endfor %} 
+        {% if apartments.show_last %}
+          <li><span class="ellipsis">...</span></li>
+          <li><a href="/search/?page={{ apartments.num_pages }}"> {{ apartments.num_pages }} </a></li>
+        {% endif %} 
+        {% if apartments.has_next %}
+          <li><a href="/search/?page={{ apartments.next_page_number }}">Next &gt;</a></li>
         {% endif %}
         </span>
       </ul>

@@ -12,10 +12,10 @@
     <div class="row">
       {% for feature in features %}
       <div class="col-sm-4">
-        <a href="{{ feature.url }}">
-          <img src="{% static feature.img %}" class="img-responsive" alt="">
+        <a href="/work-details/{{ feature.id }}">
+          <img src="{{ feature.img }}" class="img-responsive" alt="">
           <div class="listing-content">
-            {{ feature.text }}
+            {{ feature.name }}
           </div>
           </a>
       </div>
@@ -41,7 +41,7 @@
               <h4>{{ portfolio.text2 }}</h4>
             </div>
           </div>
-          <img src="{% static portfolio.img %}" class="img-responsive" alt=""> </a>
+          <img src="{{ portfolio.img }}" class="img-responsive" alt=""> </a>
       </div>
       {% endfor %}
     </div>

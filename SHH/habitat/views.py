@@ -1,4 +1,5 @@
 # encoding: utf-8
+import os
 import json
 
 from django.shortcuts import render
@@ -8,15 +9,15 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import CreateView, DeleteView, ListView
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 
 from .models import Property
 from .models import Contact
 from .models import Images
 from .forms import PropertyForm
 from .response import JSONResponse, response_mimetype
-from .serialize import serialize
+from .serialize import *
 
-import os
 from django.template.context_processors import csrf
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -35,12 +36,12 @@ ADJ_PAGES = 2
 
 def getFeatures():
     return [
-        {'img': 'images/listing/list1.png',
-            'text': 'apartment 1', 'url': '/work-details/1'},
-        {'img': 'images/listing/list2.png',
-                'text': 'apartment 2', 'url': '/work-details/2'},
-        {'img': 'images/listing/list3.png',
-                'text': 'apartment 3', 'url': '/work-details/3'},
+        {'img': '/static/images/listing/list1.png',
+            'name': 'apartment 1', 'id': '1'},
+        {'img': '/static/images/listing/list2.png',
+                'name': 'apartment 2', 'id': '2'},
+        {'img': '/static/images/listing/list3.png',
+                'name': 'apartment 3', 'id': '3'},
     ]
 
 # can be saved in DB
@@ -71,21 +72,21 @@ def getPlatforms():
 
 def getPortfolios():
     return [
-        {'img': 'images/portfolio/work-1.jpg', 'text1': 'The Shape of Design',
+        {'img': '/static/images/portfolio/work-1.jpg', 'text1': 'The Shape of Design',
             'text2': 'Branding/Graphic', 'url': 'work-details/1'},
-        {'img': 'images/portfolio/work-2.jpg', 'text1': 'czarna kawka',
+        {'img': '/static/images/portfolio/work-2.jpg', 'text1': 'czarna kawka',
                 'text2': 'Branding', 'url': '/work-details/2'},
-        {'img': 'images/portfolio/work-3.jpg', 'text1': 'czarna kawka',
+        {'img': '/static/images/portfolio/work-3.jpg', 'text1': 'czarna kawka',
                 'text2': 'Branding', 'url': '/work-details/3'},
-        {'img': 'images/portfolio/work-4.jpg', 'text1': 'czarna kawka',
+        {'img': '/static/images/portfolio/work-4.jpg', 'text1': 'czarna kawka',
                 'text2': 'Branding', 'url': '/work-details/4'},
-        {'img': 'images/portfolio/work-5.jpg', 'text1': 'czarna kawka',
+        {'img': '/static/images/portfolio/work-5.jpg', 'text1': 'czarna kawka',
                 'text2': 'Branding', 'url': '/work-details/5'},
-        {'img': 'images/portfolio/work-6.jpg', 'text1': 'czarna kawka',
+        {'img': '/static/images/portfolio/work-6.jpg', 'text1': 'czarna kawka',
                 'text2': 'Branding', 'url': '/work-details/6'},
-        {'img': 'images/portfolio/work-1.jpg', 'text1': 'The Shape of Design',
+        {'img': '/static/images/portfolio/work-1.jpg', 'text1': 'The Shape of Design',
                 'text2': 'Branding/Graphic', 'url': '/work-details/1'},
-        {'img': 'images/portfolio/work-2.jpg', 'text1': 'czarna kawka',
+        {'img': '/static/images/portfolio/work-2.jpg', 'text1': 'czarna kawka',
                 'text2': 'Branding', 'url': '/work-details/2'},
     ]
 
@@ -110,76 +111,20 @@ def getTestimonials():
 def getRenterGuideImg():
     return 'images/guide/guide1.jpg'
 
-# can be saved in DB
 
-
+# TODO can be saved in DB
 # Obsolete
 def getNeighborhoods():
     return [
-        {'area': 'French Concession', 'img': 'images/portfolio/work-2.jpg', 'class': 'cur', 'text': 'The French Concession, the former French colonial possession, is today a charming, historic district known for its European architecture and tree-lined streets, as well as its shopping, bars and cafes. Most of the action centers on the main east-west thoroughfare, Huaihai Road, an upscale shopping destination. You can also tour the area around Dongping Road, where dozens of the city\'s hottest bars are active nightly. Shopping in the area is a bit overpriced, but you\'ll find unique, one-of-a-kind items here that may be worth the money.'},
-        {'area': 'Chang Ning', 'img': 'images/portfolio/work-2.jpg', 'class': '', 'text': 'Chang Ning, the former French colonial possession, is today a charming, historic district known for its European architecture and tree-lined streets, as well as its shopping, bars and cafes. Most of the action centers on the main east-west thoroughfare, Huaihai Road, an upscale shopping destination. You can also tour the area around Dongping Road, where dozens of the city\'s hottest bars are active nightly. Shopping in the area is a bit overpriced, but you\'ll find unique, one-of-a-kind items here that may be worth the money.'},
-        {'area': 'Jing An', 'img': 'images/portfolio/work-2.jpg', 'class': '', 'text': 'Jing An, the former French colonial possession, is today a charming, historic district known for its European architecture and tree-lined streets, as well as its shopping, bars and cafes. Most of the action centers on the main east-west thoroughfare, Huaihai Road, an upscale shopping destination. You can also tour the area around Dongping Road, where dozens of the city\'s hottest bars are active nightly. Shopping in the area is a bit overpriced, but you\'ll find unique, one-of-a-kind items here that may be worth the money.'},
-        {'area': 'Huang Pu', 'img': 'images/portfolio/work-2.jpg', 'class': '', 'text': 'Huang Pu, the former French colonial possession, is today a charming, historic district known for its European architecture and tree-lined streets, as well as its shopping, bars and cafes. Most of the action centers on the main east-west thoroughfare, Huaihai Road, an upscale shopping destination. You can also tour the area around Dongping Road, where dozens of the city\'s hottest bars are active nightly. Shopping in the area is a bit overpriced, but you\'ll find unique, one-of-a-kind items here that may be worth the money.'},
+        {'area': 'French Concession', 'img': '/static/images/portfolio/work-2.jpg', 'class': 'cur', 'text': 'The French Concession, the former French colonial possession, is today a charming, historic district known for its European architecture and tree-lined streets, as well as its shopping, bars and cafes. Most of the action centers on the main east-west thoroughfare, Huaihai Road, an upscale shopping destination. You can also tour the area around Dongping Road, where dozens of the city\'s hottest bars are active nightly. Shopping in the area is a bit overpriced, but you\'ll find unique, one-of-a-kind items here that may be worth the money.'},
+        {'area': 'Chang Ning', 'img': '/static/images/portfolio/work-2.jpg', 'class': '', 'text': 'Chang Ning, the former French colonial possession, is today a charming, historic district known for its European architecture and tree-lined streets, as well as its shopping, bars and cafes. Most of the action centers on the main east-west thoroughfare, Huaihai Road, an upscale shopping destination. You can also tour the area around Dongping Road, where dozens of the city\'s hottest bars are active nightly. Shopping in the area is a bit overpriced, but you\'ll find unique, one-of-a-kind items here that may be worth the money.'},
+        {'area': 'Jing An', 'img': '/static/images/portfolio/work-2.jpg', 'class': '', 'text': 'Jing An, the former French colonial possession, is today a charming, historic district known for its European architecture and tree-lined streets, as well as its shopping, bars and cafes. Most of the action centers on the main east-west thoroughfare, Huaihai Road, an upscale shopping destination. You can also tour the area around Dongping Road, where dozens of the city\'s hottest bars are active nightly. Shopping in the area is a bit overpriced, but you\'ll find unique, one-of-a-kind items here that may be worth the money.'},
+        {'area': 'Huang Pu', 'img': '/static/images/portfolio/work-2.jpg', 'class': '', 'text': 'Huang Pu, the former French colonial possession, is today a charming, historic district known for its European architecture and tree-lined streets, as well as its shopping, bars and cafes. Most of the action centers on the main east-west thoroughfare, Huaihai Road, an upscale shopping destination. You can also tour the area around Dongping Road, where dozens of the city\'s hottest bars are active nightly. Shopping in the area is a bit overpriced, but you\'ll find unique, one-of-a-kind items here that may be worth the money.'},
     ]
-
-# TODO from db
 
 
 def getApartments():
-    return [
-        # url->id, img->load by foreign key, text1->address,
-        # text2->description.
-        {'url': '/work-details/1', 'img': 'images/listing/list1.png',
-            'text1': 'Apartment 1', 'text2': 'paragraph 1', 'tags': [], },
-        {'url': '/work-details/2', 'img': 'images/listing/list2.png',
-            'text1': 'Apartment 2', 'text2': 'paragraph 2', 'tags': [], },
-        {'url': '/work-details/3', 'img': 'images/listing/list3.png',
-            'text1': 'Apartment 3', 'text2': 'paragraph 3', 'tags': [], },
-        {'url': '/work-details/1', 'img': 'images/listing/list1.png',
-            'text1': 'Apartment 1', 'text2': 'paragraph 1', 'tags': [], },
-        {'url': '/work-details/2', 'img': 'images/listing/list2.png',
-            'text1': 'Apartment 2', 'text2': 'paragraph 2', 'tags': [], },
-        {'url': '/work-details/1', 'img': 'images/listing/list1.png',
-            'text1': 'Apartment 1', 'text2': 'paragraph 1', 'tags': [], },
-        {'url': '/work-details/2', 'img': 'images/listing/list2.png',
-            'text1': 'Apartment 2', 'text2': 'paragraph 2', 'tags': [], },
-        {'url': '/work-details/3', 'img': 'images/listing/list3.png',
-            'text1': 'Apartment 3', 'text2': 'paragraph 3', 'tags': [], },
-        {'url': '/work-details/1', 'img': 'images/listing/list1.png',
-            'text1': 'Apartment 1', 'text2': 'paragraph 1', 'tags': [], },
-        {'url': '/work-details/2', 'img': 'images/listing/list2.png',
-            'text1': 'Apartment 2', 'text2': 'paragraph 2', 'tags': [], },
-        {'url': '/work-details/1', 'img': 'images/listing/list1.png',
-            'text1': 'Apartment 1', 'text2': 'paragraph 1', 'tags': [], },
-        {'url': '/work-details/2', 'img': 'images/listing/list2.png',
-            'text1': 'Apartment 2', 'text2': 'paragraph 2', 'tags': [], },
-        {'url': '/work-details/3', 'img': 'images/listing/list3.png',
-            'text1': 'Apartment 3', 'text2': 'paragraph 3', 'tags': [], },
-        {'url': '/work-details/1', 'img': 'images/listing/list1.png',
-            'text1': 'Apartment 1', 'text2': 'paragraph 1', 'tags': [], },
-        {'url': '/work-details/2', 'img': 'images/listing/list2.png',
-            'text1': 'Apartment 2', 'text2': 'paragraph 2', 'tags': [], },
-        {'url': '/work-details/1', 'img': 'images/listing/list1.png',
-            'text1': 'Apartment 1', 'text2': 'paragraph 1', 'tags': [], },
-        {'url': '/work-details/2', 'img': 'images/listing/list2.png',
-            'text1': 'Apartment 2', 'text2': 'paragraph 2', 'tags': [], },
-        {'url': '/work-details/3', 'img': 'images/listing/list3.png',
-            'text1': 'Apartment 3', 'text2': 'paragraph 3', 'tags': [], },
-        {'url': '/work-details/1', 'img': 'images/listing/list1.png',
-            'text1': 'Apartment 1', 'text2': 'paragraph 1', 'tags': [], },
-        {'url': '/work-details/2', 'img': 'images/listing/list2.png',
-            'text1': 'Apartment 2', 'text2': 'paragraph 2', 'tags': [], },
-        {'url': '/work-details/1', 'img': 'images/listing/list1.png',
-            'text1': 'Apartment 1', 'text2': 'paragraph 1', 'tags': [], },
-        {'url': '/work-details/2', 'img': 'images/listing/list2.png',
-            'text1': 'Apartment 2', 'text2': 'paragraph 2', 'tags': [], },
-        {'url': '/work-details/3', 'img': 'images/listing/list3.png',
-            'text1': 'Apartment 3', 'text2': 'paragraph 3', 'tags': [], },
-        {'url': '/work-details/1', 'img': 'images/listing/list1.png',
-            'text1': 'Apartment 1', 'text2': 'paragraph 1', 'tags': [], },
-        {'url': '/work-details/2', 'img': 'images/listing/list2.png',
-            'text1': 'Apartment 2', 'text2': 'paragraph 2', 'tags': [], },
-    ]
+    return Property.objects.all()
 
 
 def getPagedApartments(page):
@@ -199,7 +144,13 @@ def getPagedApartments(page):
                     if n > 0 and n <= paginator.num_pages]
 
     return {
-        'data': apartments,
+        'has_previous': apartments.has_previous,
+        'has_next': apartments.has_next,
+        'previous_page_number': apartments.previous_page_number,
+        'num_pages': apartments.paginator.num_pages,
+        'next_page_number': apartments.next_page_number,
+        'number': apartments.number,
+        'data': [serialize_search(p) for p in apartments],
         'page_numbers': page_numbers,
         'show_first': 1 not in page_numbers,
         'show_last': paginator.num_pages not in page_numbers,
@@ -209,22 +160,26 @@ def getPagedApartments(page):
 
 
 def getAptDetails(id):
-    return {
-        'apt_name': 'apt_name',
+    apt = get_object_or_404(Property, pk=id)
+    images = Images.objects.filter(prop_id=id)
+    if images is None or len(images) <= 0:
+        images = ["/static/images/listing/list1.png", "/static/images/listing/list2.png", "/static/images/listing/list3.png"]
+    
+    content = {
+        'apt_name': apt.name,
+        'address': apt.address,
+        'room_type': apt.room_type,
+        'property_type': apt.property_type,
+        'price': apt.price,
         'descriptions': ['Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Maecenas',
                          'ut fermentum massa justo sit amet risus. Maecenas sed diam eget risus varius blandit sit amet non magna. Nullam quis',
                          'risus eget urna mollis ornare vel eu leo.', ],
-        'contact_url': '/people/?id=1',
-        'tags': [],
+        #'contact_url': '/people/?uid={0}'.format(apt.user.id),
+        'contact_url': 'mailto:{0}'.format(apt.email),
+        'pub_date': apt.pub_date,
+        'tags': apt.get_features_list(),
         # Image
-        'apt_imgs': [
-            {'img': 'images/slider/slid1.jpg', 'alt': 'First slide',
-                'class': 'active', "idx": "0"},
-            {'img': 'images/slider/slid2.jpg',
-                'alt': 'Second slide', 'class': '', "idx": "1"},
-            {'img': 'images/slider/slid3.jpg',
-                'alt': 'Third slide', 'class': '', "idx": "2"},
-        ],
+        'apt_imgs': [serialize_work_details(c, image) for c, image in enumerate(images)],
         # Comment
         'testimonials': [
             {'text1': '"Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Donec sed odio dui. Phasellus non dolor nibh. Nullam elementum Aenean eu leo quam..."',
@@ -237,6 +192,8 @@ def getAptDetails(id):
                 'text2': 'Kristy Gabbor, Martix Media'},
         ]
     }
+    # print(content)
+    return content
 
 # ----------------------------------
 # # Create your views here.
@@ -269,8 +226,8 @@ def searchGet(request):
     return render(request, 'search.html', context)
 
 
-def work_details(request):
-    context = getAptDetails(0)
+def work_details(request, pid):
+    context = getAptDetails(pid)
     return render(request, 'work-details.html', context)
 
 
@@ -310,6 +267,7 @@ def upload_image(request, pid):
     # check pid and user
     return render(request, 'habitat/images_angular_form.html', {'pid': pid})
 
+
 #@login_required(login_url='/accounts/login/')
 def add_image(request, pid):
     return render(request, 'add-image.html', {'pid': pid})
@@ -319,7 +277,7 @@ def add_image(request, pid):
 def add_property(request):
     if request.method == 'POST':
         form = PropertyForm(request.POST)
-        print(form)
+        # print(form)
         print(form.is_valid())
         if form.is_valid():
             prop = form.save()
@@ -402,25 +360,13 @@ class PictureDeleteView(DeleteView):
         return response
 
 
-def belongsToProperty(image, pid):
-    tokens = image.file.name.split(os.sep)
-    """
-    print(tokens)
-    print(tokens[-2])
-    print(pid)
-    """
-    if len(tokens) < 2:
-        return False
-    return pid == tokens[-2]
-
-
 class PictureListView(ListView):
     model = Images
 
     def render_to_response(self, context, **response_kwargs):
         pid = self.kwargs['pid']
-        #print(self.get_queryset())
-        files = [serialize(p) for p in self.get_queryset() if belongsToProperty(p, pid)]
+        # print(self.get_queryset())
+        files = [serialize(p) for p in self.get_queryset().filter(prop_id=pid)]
         data = {'files': files}
         response = JSONResponse(data, mimetype=response_mimetype(self.request))
         response['Content-Disposition'] = 'inline; filename=files.json'

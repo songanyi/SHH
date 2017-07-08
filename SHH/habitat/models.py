@@ -65,8 +65,7 @@ class Property(models.Model):
                    (FOUR_BR_PLUS, _('4BR+')),
                    )
 
-    name = models.CharField('Your property name:',
-                            default='', max_length=50, blank=True)
+    name = models.CharField('Your property name:', max_length=50, blank=True)
     #description = models.TextField()
     address = models.CharField(
         '* Input your address', max_length=50, blank=False)
@@ -86,6 +85,7 @@ class Property(models.Model):
     submitted = models.BooleanField(default=False)
     # TODO add user
     #user = models.ForeignKey(User)
+    # TODO add main_image
     
     def __str__(self):
         return "property_id:{0}".format(self.id)

@@ -24,7 +24,7 @@
         <div class="carousel-inner">
           {% for apt_img in apt_imgs %}
           <div class="item {{ apt_img.class }}">
-            <img src="{% static apt_img.img %}" alt="{{ apt_img.alt }}">
+            <img src="{{ apt_img.img }}" alt="{{ apt_img.alt }}">
           </div>
           {% endfor %}
         </div>
