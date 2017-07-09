@@ -35,6 +35,7 @@ class UserForm(UserCreationForm):
         model = User
         fields = ('username', 'password1', 'password2')
 
+    #https://stackoverflow.com/questions/5827590/css-styling-in-django-forms
     def __init__(self, *args, **kwargs):
         super(UserForm, self).__init__(*args, **kwargs)
 

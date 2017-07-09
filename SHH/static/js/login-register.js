@@ -60,6 +60,7 @@ function registerAjax() {
 }
 
 function loginAjax() {
+    //https://stackoverflow.com/questions/10041496/how-to-use-jquery-ajax-to-my-forms-action
     console.log($('#login-form').serialize());
     console.log("loginAjax", $("#login-form").attr('action'), $('#username-login').val(),  $('#password-login').val(), '{{ csrf_token }}');
     $.ajax({
