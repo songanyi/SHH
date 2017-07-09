@@ -168,9 +168,11 @@ def getAptDetails(id):
     content = {
         'apt_name': apt.name,
         'address': apt.address,
+
         'room_type': apt.room_type,
         'property_type': apt.property_type,
         'price': apt.price,
+        # TODO merge room_type, property_type, price into descriptions
         'descriptions': ['Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Maecenas',
                          'ut fermentum massa justo sit amet risus. Maecenas sed diam eget risus varius blandit sit amet non magna. Nullam quis',
                          'risus eget urna mollis ornare vel eu leo.', ],
@@ -181,6 +183,7 @@ def getAptDetails(id):
         # Image
         'apt_imgs': [serialize_work_details(c, image) for c, image in enumerate(images)],
         # Comment
+        # TODO add related comments or use commment services
         'testimonials': [
             {'text1': '"Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Donec sed odio dui. Phasellus non dolor nibh. Nullam elementum Aenean eu leo quam..."',
                 'text2': 'Rene Brown, Open Window production'},
