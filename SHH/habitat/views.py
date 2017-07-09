@@ -296,11 +296,12 @@ def add_property(request):
     return render(request, 'add-property.html', {'form': form})
 
 
+
+
 class PictureCreateView(CreateView):
     model = Images
     fields = "__all__"
-    #fields = ['files', 'prop_id']
-
+    
     #@login_required(login_url='/accounts/login/')
     def form_valid(self, form):
         images = form.save(commit=False)
@@ -325,31 +326,8 @@ class PictureCreateView(CreateView):
         return HttpResponse(content=data, status=400, content_type='application/json')
 
 
-# TODO remove
-class BasicVersionCreateView(PictureCreateView):
-    template_name_suffix = '_basic_form'
-
-# TODO remove
-
-
-class BasicPlusVersionCreateView(PictureCreateView):
-    template_name_suffix = '_basicplus_form'
-
-
 class AngularVersionCreateView(PictureCreateView):
     template_name_suffix = '_angular_form'
-
-
-"""
-    fields = ['file']
-
-    def form_valid(self, form):
-        print("form")
-        print(form)
-        print("-----")
-        form.instance.prop = Property.objects.get(pk=form.cleaned_data['prop_id'])
-        return super(AngularVersionCreateView, self).form_valid(form)
-"""
 
 
 class PictureDeleteView(DeleteView):
