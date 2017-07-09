@@ -160,3 +160,13 @@ class Comment(models.Model):
 
     def __str__(self):
         pass
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+    name = models.CharField(max_length=20)
+    phonenumber = models.CharField(max_length=18)
+    email = models.EmailField()
+
+    def __str__(self):
+        return str(user.id)

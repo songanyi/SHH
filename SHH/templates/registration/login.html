@@ -8,11 +8,6 @@
 <p>Please login to see this page.</p>
 {% endif %} {% endif %}
 
-<script src="{% static 'js/jquery.min.js' %}"></script>
-<script text="javascript">
-    $(document).ready(function() {    
-        openLoginModal();
-    });
-</script>
 {% include "login.html" %}
+
 {% endblock %}

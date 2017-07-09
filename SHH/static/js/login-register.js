@@ -35,31 +35,53 @@ function openRegisterModal() {
 
 }
 
-function loginAjax() {
-    /*
-    $.post("/accounts/login/", function (data) {
-        if (data == 1) {
-            window.location.replace("/index");
-        } else {
-            shakeModal();
-        }
-    });
-    */
-
+//obsolete
+function registerAjax() {
     $.ajax({
-        url: '/accounts/login',
+        url: $(this).attr('action'),
         type: 'post',
         data: {
-            email: $('#email-login').val(),
-            password: $('#password-login').val(),
-            //stayloggedin: document.getElementById('stayloggedin').checked,
-            next: next,
+            username: $('useranme').val(),
+            email: $('#username').val(),
+            password1: $('#password1').val(),
+            password2: $('#password2').val(),
         },
         success: function(data) {
             if (data.success) {
-                window.location.replace("/index");
+                // TODO to profile or something
+                window.location.replace('/index/');
             } else {
                 console.log(data);
+                // TODO show errors accodring to data
+                shakeModalRegister()
+            }
+        }
+    });
+}
+
+function loginAjax() {
+    console.log($('#login-form').serialize());
+    console.log("loginAjax", $("#login-form").attr('action'), $('#username-login').val(),  $('#password-login').val(), '{{ csrf_token }}');
+    $.ajax({
+        url: $("#login-form").attr('action'),
+        type: 'POST',
+        data: $('#login-form').serialize(),
+        /*
+        data: {
+            'email': $('#email-login').val(),
+            'password': $('#password-login').val(),
+            'csrfmiddlewaretoken': $("[name='csrfmiddlewaretoken']"),
+            //stayloggedin: document.getElementById('stayloggedin').checked,
+            //next: next,
+        },
+        */
+        success: function(data) {
+            console.log(data);
+            if (data.success) {
+                window.location.replace("/index/");
+            } else {
+                console.log(data);
+                // TODO show errors accodring to data
                 shakeModal()
             }
         }
@@ -77,3 +99,11 @@ function shakeModal() {
     }, 1000);
 }
 
+function shakeModalRegister() {
+    $('#loginModal .modal-dialog').addClass('shake');
+    $('.error').addClass('alert alert-danger').html("Failed to register");
+    $('input[type="password"]').val('');
+    setTimeout(function () {
+        $('#loginModal .modal-dialog').removeClass('shake');
+    }, 1000);
+}

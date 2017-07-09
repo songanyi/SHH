@@ -1,5 +1,6 @@
-from .models import Property
+from .models import Property, UserProfile, User
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import gettext as _
 #from taggit.forms import TagWidget
 
@@ -11,10 +12,32 @@ class PropertyForm(forms.ModelForm):
     '''
     class Meta:
         model = Property
-        fields = ('name', 'address', 'room_type',
+        fields = ['name', 'address', 'room_type',
                   'size', 'property_type', 'price',
-                  'email', 'phone', 'features')
+                  'email', 'phone', 'features']
         widgets = {
             'room_type': forms.RadioSelect,
             'property_type': forms.RadioSelect,
         }
+
+
+class UserForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ('username', 'password1', 'password2')
+
+    def __init__(self, *args, **kwargs):
+        super(UserForm, self).__init__(*args, **kwargs)
+
+        self.fields['username'].widget.attrs['class'] = 'form-control'
+        self.fields['username'].widget.attrs['placeholder'] = 'Email'
+        self.fields['password1'].widget.attrs['class'] = 'form-control'
+        self.fields['password1'].widget.attrs['placeholder'] = 'Password'
+        self.fields['password2'].widget.attrs['class'] = 'form-control'
+        self.fields['password2'].widget.attrs['placeholder'] = 'Repeat Password'
+
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['name', 'phonenumber', 'email']

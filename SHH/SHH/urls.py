@@ -33,11 +33,13 @@ urlpatterns = [
     url(r'^upload/', include('habitat.urls')),
     url(r'^upload-image/(?P<pid>\d+)', views.upload_image, name="upload-image"),
     url(r'^upload-image/', views.upload_image_get, name="upload-image-get"),
+    url(r'^profile/(?P<uid>\d+)', views.profile, name="profile"),
 
     url(r'^add-image/(?P<pid>\d+)', views.add_image, name="add-image"),
 
     url(r'^accounts/login/', views.login, name="login"),
     url(r'^accounts/logout/', views.logout, name="logout"),
+    url(r'^accounts/register/$', views.register, name='register'),
     url(r'^accounts/', include('django.contrib.auth.urls')),
     
 ]

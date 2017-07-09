@@ -36,7 +36,12 @@
                         <li><a href="/renter-guide/">Renter Guide</a></li>
                         <li><a href="/search/">Search Apartments</a></li>
                         <li><a href="/contact/">Contact</a></li>
-                        <li><a href="javascript:void(0)" onclick="openLoginModal();"><button class="btn-head">Sign In/Register</button></a></li>
+                        {% if user.is_authenticated %}
+                            <li><a href="/profile/{{ user.id }}">Profile</a></li>
+                            <li><a href="{% url 'logout' %}"> Logout </a> </li>
+                        {% else %}
+                            <li><a href="javascript:void(0)" onclick="openLoginModal();"><button class="btn-head">Sign In/Register</button></a></li>
+                        {% endif %}
                     </ul>
                 </nav>
                 <a href="#" class="nav-toggle">Menu<span></span></a> </div>

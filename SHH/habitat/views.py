@@ -4,6 +4,7 @@ import json
 
 from django import forms
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.conf import settings
@@ -16,10 +17,8 @@ from django.views import generic
 from django.views.decorators.http import require_POST
 from django.views.generic import CreateView, DeleteView, ListView
 
-from .models import Property
-from .models import Contact
-from .models import Images
-from .forms import PropertyForm
+from .models import Property, Images, UserProfile
+from .forms import PropertyForm, UserProfileForm, UserForm
 from .response import JSONResponse, response_mimetype
 from .serialize import *
 
@@ -298,10 +297,9 @@ def login(request):
 
         username = request.POST.get('email').strip()
         password = request.POST.get('password').strip()
-        stayloggedin = request.POST.get('stayloggedin')
-        print(stayloggedin)
+        stayloggedin = request.POST.get('stayloggedin') # None if not set
         if stayloggedin is None or stayloggedin == False:
-            self.request.session.set_expiry(0)
+            request.session.set_expiry(0)
 
         if username and password:
             user = auth.authenticate(username=username, password=password)
@@ -315,7 +313,7 @@ def login(request):
             else:
                 data = {'success': False, 'error': 'Wrong username and/or passowrd'}
                 
-            return HttpResponse(json.dumps(data), mimetypes='application/json')
+            return HttpResponse(json.dumps(data), content_type='application/json')
 
         return HttpResponseBadRequest()
     else:
@@ -326,6 +324,43 @@ def logout(request):
     auth.logout(request)
     #TODO return to returnUrl
     return HttpResponseRedirect('/index/')
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            auth.login(request, user)
+            # TODO return to next or profile
+            return HttpResponseRedirect('/index/')
+        else:
+            print("error:")
+            print(form.errors)
+            return render(request, "registration/login.html", {'user_form': form, 'register': True})
+    else:
+        form = UserForm()
+        return render(request, "registration/login.html", {'user_form': form, 'register': True})
+
+
+def register_ajax(request):
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            auth.login(request, user)
+            # TODO return to next
+            data = {'success': True }
+        else:
+            data = {'success': False, 'error': 'Invalid Form'}
+        return HttpResponse(json.dumps(data), content_type='application/json')
+    else:
+        form = UserForm()
+        return render(request, "registration/login.html", {'form': form, 'register': True})
+
+
+def profile(requst, uid):
+    return render(request, "profile.html", {})
 
 
 class PictureCreateView(CreateView):
