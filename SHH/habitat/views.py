@@ -24,7 +24,7 @@ from .serialize import *
 
 PAGESIZE = 5
 ADJ_PAGES = 2
-
+LOGIN_URL = '/accounts/login/'
 # reference getApartments
 # url->id, img->load by foreign key, text1->address, text2->description.
 
@@ -252,25 +252,26 @@ def view_property(request):
     return render(request, 'view-property.html', context)
 
 
-#@login_required(login_url='/accounts/login/')
+@login_required(login_url=LOGIN_URL)
 def upload_image_get(request):
     # return render(request, 'habitat/images_basicplus_form.html', {})
     return render(request, 'habitat/images_angular_form.html', {'pid': request.GET.get('pid')})
 
 
-#@login_required(login_url='/accounts/login/')
+@login_required(login_url=LOGIN_URL)
 def upload_image(request, pid):
     # return render(request, 'habitat/images_basicplus_form.html', {})
     # check pid and user
     return render(request, 'habitat/images_angular_form.html', {'pid': pid})
 
 
-#@login_required(login_url='/accounts/login/')
+@login_required(login_url=LOGIN_URL)
 def add_image(request, pid):
     return render(request, 'add-image.html', {'pid': pid})
 
 
-#@login_required(login_url='/accounts/login/')
+# TODO add next after login
+@login_required(login_url=LOGIN_URL)
 def add_property(request):
     if request.method == 'POST':
         form = PropertyForm(request.POST)
@@ -367,7 +368,7 @@ class PictureCreateView(CreateView):
     model = Images
     fields = "__all__"
     
-    #@login_required(login_url='/accounts/login/')
+    @login_required(login_url=LOGIN_URL)
     def form_valid(self, form):
         images = form.save(commit=False)
         #images.user = request.user
