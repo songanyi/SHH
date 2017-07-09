@@ -20,6 +20,15 @@ class PropertyForm(forms.ModelForm):
             'property_type': forms.RadioSelect,
         }
 
+    def __init__(self, *args, **kwargs):
+        super(PropertyForm, self).__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs['class'] = 'form-control'
+        self.fields['address'].widget.attrs['class'] = 'form-control'
+        self.fields['size'].widget.attrs['class'] = 'form-control'
+        self.fields['price'].widget.attrs['class'] = 'form-control'
+        self.fields['email'].widget.attrs['class'] = 'form-control'
+        self.fields['phone'].widget.attrs['class'] = 'form-control'
+
 
 class UserForm(UserCreationForm):
     class Meta:

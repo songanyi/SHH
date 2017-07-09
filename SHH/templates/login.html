@@ -1,11 +1,6 @@
 {% load static %}
 <!--script type="text/javascript"> window.CSRF_TOKEN = "{{ csrf_token }}"; </script--> 
 <script src="{% static 'js/jquery.min.js' %}"></script>
-/*
-$.ajaxSetup({
-  data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
-});
-*/
 {% if not user.is_authenticated %}
     {% if register %}
         <script text="javascript">
@@ -21,7 +16,7 @@ $.ajaxSetup({
         </script>
     {% endif %}
 {% else %}
-
+    {# TODO if is logined #}
 {% endif %}
 
 <!-- hide log-in section -->

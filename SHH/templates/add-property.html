@@ -1,4 +1,28 @@
-{% extends 'base.html' %} {% load static %} {% block content%}
+{% extends 'base.html' %} {% load static %} {% block stylesheet %}
+<style>
+    ul li {
+        display: inline;
+    }
+
+    ul li label input[type="radio"] {
+        /*opacity: 0.01*/
+        /*display: none;*/
+    }
+
+    ul li label {
+        display: inline-block;
+        background-color: #DCDCDC;
+        padding: 4px 11px;
+        /*font-family: Arial;*/
+        /*font-size: 16px;*/
+        cursor: pointer;
+    }
+
+    ul li label input[type="radio"]:checked+label {
+        background-color: #3498DB;
+    }
+</style>
+{% endblock %} {% block content%}
 <!--script src="{% static 'js/jquery.min.js' %}"></script>
 <script type="text/javascript">
     $(function () {
@@ -10,15 +34,16 @@
     }
 </script-->
 
+<!-- TODO use custom UI https://stackoverflow.com/questions/15630710/django-forms-adding-div-after-form-field -->
 <section id="add_property" class="section padding-top side-margin">
-<h2>New Property</h2>
-<form method="POST" class="post-form">
-    {% csrf_token %} {{ form.as_p }}
+    <h2>Publish Your Property</h2>
+    <form method="POST" class="post-form">
+        {% csrf_token %} {{ form.as_p }}
 
-    <!--label> Upload Images </label>
+        <!--label> Upload Images </label>
     <iframe src="/upload-image" id="images" name="images" width="100%" style="height: 310px;" frameborder="0"></iframe-->
-    
-    <input type="submit" value="Submit">
-</form>
+
+        <button class="btn-guide" type="submit" value="submit" name="submit">Submit</button>
+    </form>
 </section>
 {% endblock %}
