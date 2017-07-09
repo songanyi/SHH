@@ -35,6 +35,11 @@ urlpatterns = [
     url(r'^upload-image/', views.upload_image_get, name="upload-image-get"),
 
     url(r'^add-image/(?P<pid>\d+)', views.add_image, name="add-image"),
+
+    url(r'^accounts/login/', views.login, name="login"),
+    url(r'^accounts/logout/', views.logout, name="logout"),
+    url(r'^accounts/', include('django.contrib.auth.urls')),
+    
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

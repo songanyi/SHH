@@ -2,14 +2,19 @@
 import os
 import json
 
-from django.shortcuts import render
-from django.http import HttpResponse
 from django import forms
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.views.generic import CreateView, DeleteView, ListView
+from django.core.urlresolvers import reverse
+from django.conf import settings
+from django.contrib import auth
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadRequest
+from django.shortcuts import get_object_or_404, render
+from django.template.context_processors import csrf
 from django.urls import reverse
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404
+from django.views import generic
+from django.views.decorators.http import require_POST
+from django.views.generic import CreateView, DeleteView, ListView
 
 from .models import Property
 from .models import Contact
@@ -18,21 +23,11 @@ from .forms import PropertyForm
 from .response import JSONResponse, response_mimetype
 from .serialize import *
 
-from django.template.context_processors import csrf
-from django.conf import settings
-from django.core.urlresolvers import reverse
-from django.views import generic
-from django.views.decorators.http import require_POST
-from jfu.http import upload_receive, UploadResponse, JFUResponse
-from django.contrib.auth.decorators import login_required
-
-
 PAGESIZE = 5
 ADJ_PAGES = 2
 
 # reference getApartments
 # url->id, img->load by foreign key, text1->address, text2->description.
-
 
 def getFeatures():
     return [
@@ -296,6 +291,41 @@ def add_property(request):
     return render(request, 'add-property.html', {'form': form})
 
 
+def login(request):
+    if request.method == 'POST':
+        if request.user.is_authenticated():
+            return HttpResponseRedirect('/index/')
+
+        username = request.POST.get('email').strip()
+        password = request.POST.get('password').strip()
+        stayloggedin = request.POST.get('stayloggedin')
+        print(stayloggedin)
+        if stayloggedin is None or stayloggedin == False:
+            self.request.session.set_expiry(0)
+
+        if username and password:
+            user = auth.authenticate(username=username, password=password)
+
+            if user is not None and user.is_active:
+                if user.is_active:
+                    auth.login(request, user)
+                    data = {'success': True }
+                else:
+                    data = {'success': False, 'error': 'User is not active'}
+            else:
+                data = {'success': False, 'error': 'Wrong username and/or passowrd'}
+                
+            return HttpResponse(json.dumps(data), mimetypes='application/json')
+
+        return HttpResponseBadRequest()
+    else:
+        return render(request, 'registration/login.html', {})
+
+
+def logout(request):
+    auth.logout(request)
+    #TODO return to returnUrl
+    return HttpResponseRedirect('/index/')
 
 
 class PictureCreateView(CreateView):

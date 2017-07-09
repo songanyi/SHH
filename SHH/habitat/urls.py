@@ -1,8 +1,7 @@
 # encoding: utf-8
 from django.conf.urls import url
-from habitat.views import (PictureListView, PictureDeleteView,
-                           BasicPlusVersionCreateView, AngularVersionCreateView,
-                           BasicVersionCreateView, PictureCreateView)
+from habitat.views import (PictureListView, PictureDeleteView, AngularVersionCreateView,
+                            PictureCreateView)
 
 urlpatterns = [
     url(r'^angular/$', AngularVersionCreateView.as_view(), name='upload-angular'),
