@@ -89,6 +89,24 @@ h5 {
 	border: 2px solid #3498db;
 }
 
+
+.btn-head {
+	margin:auto;
+	padding: 5px 10px 5px 10px;
+	background-color: #3498db;
+	color: white;
+	border: 1px solid #3498db;
+	border-radius: 4px;
+	-webkit-transition-duration: 0.4s; /* Safari */
+	transition-duration: 0.4s;
+}
+.btn-head:hover{
+	background-color:white;
+	color: #3498db;
+	border: 1px solid #3498db;
+}
+
+
 a:focus,input{outline:none;}
 area, a, a img,input{blr:expression(this.onFocus=this.blur());}
 /* ------------------------------------------------------------------------------
@@ -185,11 +203,10 @@ text-align: center;
 }
 #header.fixed {
 	background-color: #fff;
-
 }
 #header.fixed .header-content {
 	border-bottom: 0;
-	padding: 25px 0;
+	padding: 25px 0 15px 0;
 }
 #header.fixed .nav-toggle {
 	top: 18px;
@@ -355,9 +372,6 @@ text-align: center;
 	-webkit-transform: translateY(0) rotate(-45deg);
 	transform: translateY(0) rotate(-45deg);
 }
-/* ------------------------------------------------------------------------------
-	 Header Slider
--------------------------------------------------------------------------------*/
 
 /* ------------------------------------------------------------------------------
 	 Welcome
@@ -365,7 +379,7 @@ text-align: center;
 .welcome {
 	width: 94%;
 	margin: auto;
-	padding: 12% 3% 4% 2%;
+	padding: 15% 3% 4% 2%;
 }
 
 .welcome-color{
@@ -401,7 +415,10 @@ font-size: 40px ;
 	padding-top: 70px;
 	cursor:pointer;
 }
+.listing-image{
+	width: auto;
 
+}
 
 /* ------------------------------------------------------------------------------
 	 Portfolio
@@ -752,10 +769,38 @@ font-size: 40px ;
 		margin-right:3%;
 }
 
+.guide-img{
+ 	width: 200px;
+}
+
 .guide-heading{
-	padding: 40px 0 40px 0;
+	padding: 50px 0 50px 0;
 	color: #2980B9;
 	text-align: center;
+	text-transform: capitalize;
+	font-weight: 600;
+}
+
+.guide-subheading{
+	padding: 10px 0 10px 0;
+	color: #2980B9;
+	text-align: center;
+	text-transform: capitalize;
+	font-size: 20px;
+}
+
+.guide-context-title{
+	color: #2980B9;
+	text-align: right;
+	text-transform: capitalize;
+	font-weight: 600;
+	font-size: 16px;
+}
+
+.renter-guide h5{
+	font-weight:500;
+	text-transform: capitalize;
+	color: #2980B9;
 }
 
 .guide-bkg{

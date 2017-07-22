@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "taggit",
     "habitat",
+    'multiselectfield',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -159,6 +160,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'habitat.context_processors.user_form_processor',
             ],
         },
     },
