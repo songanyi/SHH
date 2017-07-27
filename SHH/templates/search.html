@@ -2,9 +2,22 @@
 
 <!-- Testlist Section -->
 <section id="search" class="section search">
+
+  <div>
+    <h3> Search Your Apartment</h3>
+    <form action="/search" method="get" id="search_form_0">
+      <div class="control-group">
+        <label for="term">Apartment Query</label>
+        <div class="controls">
+          <input value="{{ query }}" type="text" class="form-control" name="query" id="query" placeholder="Nanjing Road">
+        </div>
+        <button type="submit" class="btn-guide" value="search">Search</button>
+      </div>
+    </form>
+  </div>
+
   <div class="container-fluid">
     <h4>Apartments in Shanghai</h4>
-
     {% for apartment in apartments.data %}
     <div class="row search-row">
       <a href="/work-details/{{ apartment.id }}">
@@ -40,19 +53,15 @@
         {% endif %} {% if apartments.show_first %}
         <li><a href="/search/?page=1"> 1 </a></li>
         <li><span>...</span></li>
-        {% endif %} {% for page in apartments.page_numbers %} 
-          {% ifequal page apartments.number %}
-            <li><a class="active" href="/search/?page={{page}}">{{page}}</a></li>
-          {% else %}
-          <li><a href="/search/?page={{page}}">{{page}}</a></li>
-          {% endifequal %} 
-        {% endfor %} 
-        {% if apartments.show_last %}
-          <li><span class="ellipsis">...</span></li>
-          <li><a href="/search/?page={{ apartments.num_pages }}"> {{ apartments.num_pages }} </a></li>
-        {% endif %} 
-        {% if apartments.has_next %}
-          <li><a href="/search/?page={{ apartments.next_page_number }}">Next &gt;</a></li>
+        {% endif %} {% for page in apartments.page_numbers %} {% ifequal page apartments.number %}
+        <li><a class="active" href="/search/?page={{page}}">{{page}}</a></li>
+        {% else %}
+        <li><a href="/search/?page={{page}}">{{page}}</a></li>
+        {% endifequal %} {% endfor %} {% if apartments.show_last %}
+        <li><span class="ellipsis">...</span></li>
+        <li><a href="/search/?page={{ apartments.num_pages }}"> {{ apartments.num_pages }} </a></li>
+        {% endif %} {% if apartments.has_next %}
+        <li><a href="/search/?page={{ apartments.next_page_number }}">Next &gt;</a></li>
         {% endif %}
         </span>
       </ul>

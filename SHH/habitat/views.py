@@ -117,12 +117,16 @@ def getNeighborhoods():
     ]
 
 
-def getApartments():
-    return Property.objects.all()
+def getApartments(query):
+    if len(query) == 0:
+        return Property.objects.all()
+
+    #TODO
+    return Property.objects.filter()
 
 
-def getPagedApartments(page):
-    apartments = getApartments()
+def getPagedApartments(page, query):
+    apartments = getApartments(query)
     paginator = Paginator(apartments, PAGESIZE)
     try:
         apartments = paginator.page(page)
@@ -217,8 +221,10 @@ def search(request, page):
 
 def searchGet(request):
     page = request.GET.get('page')
+    query = request.GET.get('query')
+
     context = {
-        'apartments': getPagedApartments(page),
+        'apartments': getPagedApartments(page, query),
     }
     return render(request, 'search.html', context)
 
