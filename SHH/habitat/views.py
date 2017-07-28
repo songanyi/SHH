@@ -18,7 +18,7 @@ from django.views.decorators.http import require_POST
 from django.views.generic import CreateView, DeleteView, ListView
 
 from .models import Property, Images, UserProfile
-from .forms import PropertyForm, UserProfileForm, UserForm
+from .forms import PropertyForm, UserProfileForm, UserForm, PropertySearchForm
 from .response import JSONResponse, response_mimetype
 from .serialize import *
 
@@ -117,16 +117,24 @@ def getNeighborhoods():
     ]
 
 
-def getApartments(query):
-    if len(query) == 0:
+def getApartments(search_query):
+    if search_query is not None:
+        address = search_query['address']
+        room_type = search_query['room_type']
+        price_low = search_query['price_low']
+        price_high = search_query['price_high']
+        min_size = search_query['min_size']
+        property_type = search_query['property_type']
+        features = search_query['features']
+
         return Property.objects.all()
 
     #TODO
-    return Property.objects.filter()
+    return Property.objects.all()
 
 
-def getPagedApartments(page, query):
-    apartments = getApartments(query)
+def getPagedApartments(page, search_query):
+    apartments = getApartments(search_query)
     paginator = Paginator(apartments, PAGESIZE)
     try:
         apartments = paginator.page(page)
@@ -221,10 +229,22 @@ def search(request, page):
 
 def searchGet(request):
     page = request.GET.get('page')
-    query = request.GET.get('query')
 
+    search_query = {
+        'address' : request.GET.get('address'),
+        'room_type' : request.GET.get('room_type'),
+        'price_low' : request.GET.get('price_low'),
+        'price_high' : request.GET.get('price_high'),
+        'min_size' : request.GET.get('min_size'),
+        'property_type' : request.GET.get('property_type'),
+        'features' : request.GET.get('features'),
+    }
+
+
+    form = PropertySearchForm()
     context = {
-        'apartments': getPagedApartments(page, query),
+        'apartments': getPagedApartments(page, search_query),
+        'form': form,
     }
     return render(request, 'search.html', context)
 

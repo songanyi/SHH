@@ -51,3 +51,31 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['name', 'phonenumber', 'email']
+
+
+class PropertySearchForm(forms.ModelForm):
+    '''
+    https://stackoverflow.com/questions/15846120/uploading-a-file-in-django-with-modelforms
+    https://stackoverflow.com/questions/32889199/how-to-upload-multiple-images-using-modelformset-django
+    '''
+    price_low = forms.IntegerField('Price Range High')
+    price_high = forms.IntegerField('Price Range Low')
+    min_size = forms.IntegerField('Minimum Room Size')
+
+    class Meta:
+        model = Property
+        fields = ['address', 'room_type', 'price_low', 'price_high',
+                  'min_size', 'property_type',
+                  'features',
+                  ]
+        widgets = {
+            'room_type': forms.RadioSelect,
+            'property_type': forms.RadioSelect,
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(PropertySearchForm, self).__init__(*args, **kwargs)
+        self.fields['address'].widget.attrs['class'] = 'form-control'
+        self.fields['min_size'].widget.attrs['class'] = 'form-control'
+        self.fields['price_low'].widget.attrs['class'] = 'form-control'
+        self.fields['price_high'].widget.attrs['class'] = 'form-control'

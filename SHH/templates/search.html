@@ -1,21 +1,59 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %} {% load static %} {% block stylesheet %}
+<style>
+    ul li {
+        display: inline;
+    }
+
+    ul li label input[type="radio"] {
+        /*opacity: 0.01*/
+        /*display: none;*/
+    }
+
+    ul li label {
+        display: inline-block;
+        background-color: #DCDCDC;
+        padding: 4px 11px;
+        /*font-family: Arial;*/
+        /*font-size: 16px;*/
+        cursor: pointer;
+    }
+
+    ul li label input[type="radio"]:checked+label {
+        background-color: #3498DB;
+    }
+</style>
+{% endblock %} {% block content %}
 
 <!-- Testlist Section -->
 <section id="search" class="section search">
 
   <div>
     <h3> Search Your Apartment</h3>
-    <form action="/search" method="get" id="search_form_0">
+    <!--form action="/search" method="get" id="search_form_0">
       <div class="control-group">
-        <label for="term">Apartment Query</label>
+
+        <label for="location">Location</label>
         <div class="controls">
-          <input value="{{ query }}" type="text" class="form-control" name="query" id="query" placeholder="Nanjing Road">
+          <input value="{{ location }}" type="text" class="form-control" name="location" id="location" placeholder="Nanjing Road">
         </div>
+
+        <label for="room_type">Type</label>
+        <div class="controls">
+          <input type="radio" name="gender" value="male" checked> Male<br>
+          <input value="{{ room_type }}" type="radio" name="room_type" value="male" checked >  <br/>
+        </div>
+
         <button type="submit" class="btn-guide" value="search">Search</button>
       </div>
+    </form-->
+    <form method="GET" action="/search" class="post-form">
+        {% csrf_token %} {{ form.as_p }}
+        <button class="btn-guide" type="submit" value="Search" name="Search">Search</button>
     </form>
   </div>
 
+  <hr/>
+  
   <div class="container-fluid">
     <h4>Apartments in Shanghai</h4>
     {% for apartment in apartments.data %}
