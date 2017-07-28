@@ -118,6 +118,7 @@ def getNeighborhoods():
 
 
 def getApartments(search_query):
+    # TODO
     if search_query is not None:
         address = search_query['address']
         room_type = search_query['room_type']
@@ -240,7 +241,7 @@ def searchGet(request):
         'features' : request.GET.get('features'),
     }
 
-
+    # TODO
     form = PropertySearchForm()
     context = {
         'apartments': getPagedApartments(page, search_query),
