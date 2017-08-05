@@ -1,0 +1,61 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<!-- Testlist Section -->
+<section id="search" class="section search">
+  <div class="container-fluid">
+    <h4>Apartments in Shanghai</h4>
+
+    {% for apartment in apartments.data %}
+    <div class="row search-row">
+      <a href="/work-details/{{ apartment.id }}">
+        <div class="col-md-4">
+          <img src="{{ apartment.img }}" class="img-responsive search-image" alt="">
+        </div>
+        <div class="col-md-8">
+          <h4>{{ apartment.name }}</h4>
+          <p>{{ apartment.address }}</p>
+        </div>
+      </a>
+    </div>
+    <div class="line"></div>
+    {% endfor %}
+
+    <div class="container-fluid">
+      <!--div class="pagination">
+        <span class="step-links">
+        {% if apartments.has_previous %}
+            <a href="/search/?page={{ apartments.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ apartments.number }} of {{ apartments.paginator.num_pages }}.
+        </span> {% if apartments.has_next %}
+        <a href="/search/?page={{ apartments.next_page_number }}">next</a> {% endif %}
+        </span>
+      </div-->
+
+      <ul class="pagination">
+        {% if apartments.has_previous %}
+        <li><a href="/search/?page={{ apartments.previous_page_number }}"> &lt; Prev</a></li>
+        {% endif %} {% if apartments.show_first %}
+        <li><a href="/search/?page=1"> 1 </a></li>
+        <li><span>...</span></li>
+        {% endif %} {% for page in apartments.page_numbers %} 
+          {% ifequal page apartments.number %}
+            <li><a class="active" href="/search/?page={{page}}">{{page}}</a></li>
+          {% else %}
+          <li><a href="/search/?page={{page}}">{{page}}</a></li>
+          {% endifequal %} 
+        {% endfor %} 
+        {% if apartments.show_last %}
+          <li><span class="ellipsis">...</span></li>
+          <li><a href="/search/?page={{ apartments.num_pages }}"> {{ apartments.num_pages }} </a></li>
+        {% endif %} 
+        {% if apartments.has_next %}
+          <li><a href="/search/?page={{ apartments.next_page_number }}">Next &gt;</a></li>
+        {% endif %}
+        </span>
+      </ul>
+    </div>
+</section>
+{% endblock %}

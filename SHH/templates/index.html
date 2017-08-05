@@ -1,0 +1,125 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<!-- Welcome Section -->
+<section id="welcome" class="section welcome">
+  <h3 class="welcome-color">Shanghai Habitat</h3>
+  <h3>meet your next home</h3>
+
+</section>
+
+<!-- Feature Listing Section -->
+<section id="listing" class="section listing">
+  <div class="container">
+    <div class="row">
+      {% for feature in features %}
+      <div class="col-sm-4">
+        <a href="/work-details/{{ feature.id }}">
+          <img src="{{ feature.img }}" class="img-responsive" alt="">
+          <div class="listing-content">
+            {{ feature.name }}
+          </div>
+          </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="listing-btn">
+    <a href="/search/"><button class="btn-outline"> Explore More</button></a>
+  </div>
+</section>
+<!-- Feature Listing Section -->
+
+<!-- portfolio grid section -->
+<section id="portfolio" class="section portfolio">
+  <div class="container-fluid">
+    <div class="row">
+      {% for portfolio in portfolios %}
+      <div class="col-sm-3 portfolio-item">
+        <a href="{{ portfolio.url }}" class="portfolio-link">
+          <div class="caption">
+            <div class="caption-content">
+              <h3>{{ portfolio.text1 }}</h3>
+              <h4>{{ portfolio.text2 }}</h4>
+            </div>
+          </div>
+          <img src="{{ portfolio.img }}" class="img-responsive" alt=""> </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<!-- portfolio grid section -->
+
+<!-- renter guide Section -->
+<section id="renter-guide" class="section guide">
+  <h4>Learn the Shanghai ropes</h4>
+  <p>Do you need an agent? How can you find a no-fee apartment? How do you prepare for a showing? <br> Our Renter Guide will
+    prepare you for the hunt with tips, facts, checklists, forms and infographics.</p>
+  <div class="guide-btn">
+    <a href="/renter-guide/"><button class="btn-guide"> Read the Guide</button></a>
+  </div>
+</section>
+<!-- renter guide Section -->
+
+<!-- Service Section -->
+<section id="services" class="section services">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6 col-sm-6">
+        <div class="services-content">
+          <h4>We are always with you in Shanghai!</h4>
+          <p>Help you find the perfect place in town</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="services-content">
+          <h5>Our Renter Guide</h5>
+          <ul>
+            {% for renterGuide in renterGuides %}
+            <li><a href="{{ renterGuide.url }}">{{ renterGuide.text }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="services-content">
+          <h5>Our Platform</h5>
+          <ul>
+            {% for platform in platforms %}
+            <li><a href="{{ platform.url }}">{{ platform.text }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Service Section -->
+
+<!-- Testimonials section -->
+<section id="testimonials" class="section testimonials no-padding">
+  <div class="container-fluid">
+    <div class="row no-gutter">
+      <div class="flexslider">
+        <ul class="slides">
+          {% for testimonial in testimonials %}
+          <li>
+            <div class="col-md-12">
+              <blockquote>
+                <h1>{{ testimonial.text1 }}</h1>
+                <p>{{ testimonial.text2 }}</p>
+              </blockquote>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Testimonials section -->
+
+<!-- footer section -->
+{% include "footer.html" %}
+<!-- footer section -->
+
+{% endblock %}
