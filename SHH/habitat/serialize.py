@@ -56,7 +56,7 @@ from .models import Images
 import random
 
 def serialize_search(apartment, file_attr='file'):
-    print(apartment.name)
+    #print(apartment.name)
     # TODO use imageField in prop and remove this serialize
     image = Images.objects.filter(prop_id=apartment.id).first()
     if image is not None:
