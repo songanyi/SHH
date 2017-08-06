@@ -79,6 +79,7 @@ class Property(models.Model):
                                 max_choices=3,
                                 max_length=300, null=True)
     submitted = models.BooleanField(default=False)
+    description = models.TextField('Description', blank=True)
     # TODO add user
     #user = models.ForeignKey(User)
     # TODO add main_image
