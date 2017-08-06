@@ -66,23 +66,25 @@ def getPlatforms():
 
 def getPortfolios():
     return [
-        {'img': '/static/images/portfolio/work-1.jpg', 'text1': 'The Shape of Design',
-            'text2': 'Branding/Graphic', 'url': 'work-details/1'},
-        {'img': '/static/images/portfolio/work-2.jpg', 'text1': 'czarna kawka',
-                'text2': 'Branding', 'url': '/work-details/2'},
-        {'img': '/static/images/portfolio/work-3.jpg', 'text1': 'czarna kawka',
-                'text2': 'Branding', 'url': '/work-details/3'},
-        {'img': '/static/images/portfolio/work-4.jpg', 'text1': 'czarna kawka',
-                'text2': 'Branding', 'url': '/work-details/4'},
+        {'img': '/static/images/portfolio/work-1.jpg', 'text1': 'Attractions',
+            'text2': 'French Concession', 'url': 'work-details/1'},
+        {'img': '/static/images/portfolio/work-2.jpg', 'text1': 'Xin Tian Di',
+                'text2': 'Old Lanes', 'url': '/work-details/2'},
+        {'img': '/static/images/portfolio/work-3.jpg', 'text1': 'Hongkou District',
+                'text2': 'Su Zhou River', 'url': '/work-details/3'},
+        {'img': '/static/images/portfolio/work-4.jpg', 'text1': 'Waitan No.3',
+                'text2': 'The Bund', 'url': '/work-details/4'},
         {'img': '/static/images/portfolio/work-5.jpg', 'text1': 'czarna kawka',
                 'text2': 'Branding', 'url': '/work-details/5'},
         {'img': '/static/images/portfolio/work-6.jpg', 'text1': 'czarna kawka',
                 'text2': 'Branding', 'url': '/work-details/6'},
-        {'img': '/static/images/portfolio/work-1.jpg', 'text1': 'The Shape of Design',
-                'text2': 'Branding/Graphic', 'url': '/work-details/1'},
-        {'img': '/static/images/portfolio/work-2.jpg', 'text1': 'czarna kawka',
-                'text2': 'Branding', 'url': '/work-details/2'},
+        {'img': '/static/images/portfolio/work-7.jpg', 'text1': 'The Shape of Design',
+                'text2': 'Branding/Graphic', 'url': '/work-details/7'},
+        {'img': '/static/images/portfolio/work-8.jpg', 'text1': 'czarna kawka',
+                'text2': 'Branding', 'url': '/work-details/8'},
     ]
+
+
 
 # can be saved in DB
 
@@ -230,7 +232,6 @@ def work_details(request, pid):
 
 def contact(request):
     context = {
-
     }
     return render(request, 'contact.html', context)
 
@@ -360,8 +361,16 @@ def register_ajax(request):
         return render(request, "registration/login.html", {'form': form, 'register': True})
 
 
-def profile(requst, uid):
-    return render(request, "profile.html", {})
+def profile(request,uid):
+    context = {
+    }
+    return render(request, "profile.html", context)
+
+def terms(request):
+    context = {
+    }
+    return render(request, "terms.html", context)
+
 
 
 class PictureCreateView(CreateView):

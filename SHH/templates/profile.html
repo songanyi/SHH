@@ -1,5 +1,62 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
-<section id="profile" class="section profile">
-    Your profile page
-</section>
+
+<section id="profile" class="section padding-top side-margin">
+
+  <div class="container-fluid no-padding">
+    <div class="row">
+      <div class="col-md-3 profile">
+        <img src="{% static 'images/icon/icons8-home.png' %}" class="img-responsive" alt="">
+        <h4>Username</h4>
+        <p>email:contact@shhabitat.com</p>
+      </div>
+
+      <div class="col-md-9">
+		<h4>Your Listing</h4>
+        <div class="line"></div>
+
+        <div class="row search-row">
+          <a href="work-details.html">
+            <div class="col-md-4">
+                <img src="{% static 'images/listing/list1.png' %}" class="img-responsive center-block" />
+            </div>
+            <div class="col-md-8">
+              <h4>Apartment 2</h4>
+              <p>paragraph</p>
+            </div>
+          </a>
+        </div>
+        <div class="line"></div>
+
+        <div class="row search-row">
+          <a href="work-details.html">
+            <div class="col-md-4">
+                <img src="{% static 'images/listing/list1.png' %}" class="img-responsive center-block" />
+            </div>
+            <div class="col-md-8">
+              <h4>Apartment 2</h4>
+              <p>paragraph</p>
+            </div>
+          </a>
+        </div>
+        <div class="line"></div>
+
+        <div class="row search-row">
+          <a href="work-details.html">
+            <div class="col-md-4">
+                <img src="{% static 'images/listing/list1.png' %}" class="img-responsive center-block" />
+            </div>
+            <div class="col-md-8">
+              <h4>Apartment 2</h4>
+              <p>paragraph</p>
+            </div>
+          </a>
+        </div>
+        <div class="line"></div>
+      </div>
+    </div>
+  </div>
+  </section>
+
+    {% include "footer.html" %}
+
 {% endblock %}
