@@ -14,7 +14,7 @@ class PropertyForm(forms.ModelForm):
         model = Property
         fields = ['name', 'address', 'room_type',
                   'size', 'property_type', 'price',
-                  'email', 'phone', 'features']
+                  'email', 'phone', 'features', 'description']
         widgets = {
             'room_type': forms.RadioSelect,
             'property_type': forms.RadioSelect,
@@ -28,6 +28,7 @@ class PropertyForm(forms.ModelForm):
         self.fields['price'].widget.attrs['class'] = 'form-control'
         self.fields['email'].widget.attrs['class'] = 'form-control'
         self.fields['phone'].widget.attrs['class'] = 'form-control'
+        self.fields['description'].widget.attrs['class'] = 'form-control'
 
 
 class UserForm(UserCreationForm):

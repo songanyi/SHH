@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^upload-image/(?P<pid>\d+)', views.upload_image, name="upload-image"),
     url(r'^upload-image/', views.upload_image_get, name="upload-image-get"),
     url(r'^profile/(?P<uid>\d+)', views.profile, name="profile"),
+    url(r'^terms/', views.terms, name="terms"),
 
     url(r'^add-image/(?P<pid>\d+)', views.add_image, name="add-image"),
 

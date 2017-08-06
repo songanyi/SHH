@@ -27,10 +27,6 @@ class Contact(models.Model):
 
 
 class Property(models.Model):
-    '''
-        Basic information of the properties
-        我们可能需要一个 物业类型/地址/面积/房型（studio/1br/2br/3br）/租金价格/联系方式（eMail）/然后和一个features(big balcony/new renovation/)
-    '''
     FEATURE_CHOICES = (('item_key1', _('Item title 1.1')),
                        ('item_key2', _('Item title 1.2')),
                        ('item_key3', _('Item title 1.3')),
@@ -83,6 +79,7 @@ class Property(models.Model):
                                 max_choices=3,
                                 max_length=300, null=True)
     submitted = models.BooleanField(default=False)
+    description = models.TextField('Description', blank=True)
     # TODO add user
     #user = models.ForeignKey(User)
     # TODO add main_image
